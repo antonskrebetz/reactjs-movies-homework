@@ -1,0 +1,106 @@
+.movie {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  display: flex;
+  justify-content: space-between;
+
+  @media (max-width: 900px) {
+    margin-top: 30px;
+    flex-direction: column;
+  }
+
+  &-avatar {
+    margin-right: 30px;
+
+    @media (max-width: 610px) {
+      margin-right: 0;
+      display: flex;
+      justify-content: center; 
+    }
+
+    & img {
+      height: auto;
+      max-width: 330px;
+      border-radius: 10px;
+
+      @media (max-width: 380px) {
+        max-width: 260px;
+      }
+    }
+  }
+
+  &-blocktitle {
+    margin-top: 15px;
+    margin-bottom: 3px;
+    font-size: 14px;
+  }
+
+  &-genres {
+    margin-top: 30px;
+    margin-right: 20px;
+    display: flex;
+    justify-content: flex-start;
+
+    & div {
+      margin-right: 10px;
+      padding: 5px;
+      font-size: 12px;
+      background-color: green;
+      border-radius: 5px;
+    }
+  }
+
+  &-cast {
+    margin-top: 30px;
+    margin-bottom: 50px;
+
+    &_header {
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &_title {
+      font-size: 24px;
+    }
+  }
+
+  &-images {
+    margin-top: 10px;
+
+    &_title {
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    &_list {
+      display: flex;
+      flex-wrap: wrap; 
+
+      @media (max-width: 605px) {
+        justify-content: center; 
+      }
+
+      & img {
+        margin-right: 20px;
+        margin-bottom: 20px;
+        height: auto;
+        max-width: 250px;
+        border-radius: 6px;
+
+        @media (max-width: 605px) {
+          margin-right: 0;
+          max-width: 300px; 
+        }
+      }
+    }
+  }
+
+  &-reccomend {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+}
