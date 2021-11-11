@@ -46,9 +46,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-
 const Header = () => {
-
   const [lang, setLang] = useState('en');
   const handleChange = (event) => {
     setLang(event.target.value);
@@ -84,8 +82,8 @@ const Header = () => {
                   value={lang}
                   onChange={handleChange}
                 >
-                  <MenuItem value={'en'}>EN</MenuItem>
-                  <MenuItem value={'ru'}>RU</MenuItem>
+                  <MenuItem value='en'>EN</MenuItem>
+                  <MenuItem value='ru'>RU</MenuItem>
                 </Select>
               </FormControl>
             </Box>
