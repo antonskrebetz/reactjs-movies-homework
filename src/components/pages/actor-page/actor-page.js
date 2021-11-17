@@ -4,12 +4,43 @@ import ErrorBoundary from '../../error-boundary/error-boundary';
 import { Container } from '@mui/material';
 import './actor-page.scss';
 import avatar from './actor-avatar.jpg'
-import actor1 from './actor1.jpg';
-import actor2 from './actor2.jpg';
-import actor3 from './actor3.jpg';
+import useTheMovieDB from '../../../services/TMDb-service';
+import { useState, useEffect } from 'react';
 
 
 const ActorPage = () => {
+  const [actorMovies, setActorMovies] = useState([]);
+  const [actorImages, setActorImages] = useState([]);
+  const [genres, setGenres] = useState([]);
+  const movies = new useTheMovieDB();
+
+  const actorMoviesCredits = async () => {
+    const result = await movies.getPersonMovies(287);
+    setActorMovies(result.cast);
+  }
+
+  const actorImagesCredits = async () => {
+    const result = await movies.getPersonImages(287);
+    setActorImages(result.profiles);
+  }
+
+  const genresMovie = async () => {
+    const result = await movies.getMovieGenres();
+    setGenres(result.genres);
+  }
+
+  useEffect(() => {
+    actorImagesCredits();
+    actorMoviesCredits();
+    genresMovie();
+  }, []);
+
+  const viewActorImages = actorImages.slice(0, 4).map((item, i) => {
+    return (
+      <img key={i} src={`https://image.tmdb.org/t/p/w500${item.file_path}`} alt={2324}/>
+    )
+  })
+
   return (
     <Container maxWidth="xl">
       <div className="actor">
@@ -28,10 +59,7 @@ const ActorPage = () => {
           </div>
           <div className="actor-blocktitle">Photos:</div>
           <div className="actor-photos">
-            <img src={actor1} alt="www" />
-            <img src={actor2} alt="www" />
-            <img src={actor3} alt="www" />
-            <img src={avatar} alt="www" />
+            {viewActorImages}
           </div>
         </div>
       </div>
@@ -40,7 +68,7 @@ const ActorPage = () => {
           <div className="actor-known">
             Known by
           </div>
-          <MovieList/>
+          <MovieList data={actorMovies.slice(0, 10)}/>
         </ErrorBoundary>
       </div>
     </Container>

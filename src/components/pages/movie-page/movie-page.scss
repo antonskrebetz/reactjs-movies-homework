@@ -76,15 +76,15 @@
 
     &_list {
       display: flex;
-      flex-wrap: wrap; 
+      flex-wrap: wrap;
+      justify-content: space-between; 
+      gap: 20px;
 
       @media (max-width: 605px) {
         justify-content: center; 
       }
 
       & img {
-        margin-right: 20px;
-        margin-bottom: 20px;
         height: auto;
         max-width: 250px;
         border-radius: 6px;

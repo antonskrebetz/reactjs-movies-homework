@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import { Container, InputBase, Typography, Toolbar, Box, AppBar, Select, MenuItem, FormControl, ThemeProvider } from '@mui/material';
 import DarkTheme from '../mui-theme/dark-theme';
 import './header.scss';
+import useTheMovieDB from '../../services/TMDb-service';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -48,9 +49,35 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const Header = () => {
   const [lang, setLang] = useState('en');
-  const handleChange = (event) => {
+  const [searchText, setSearchText] = useState('');
+  const [searchMovies, setSearchMovies] = useState('');
+  const [page, setPage] = useState(1);
+  const [genres, setGenres] = useState([]);
+  const [countPages, setCountPages] = useState();
+  const movies = new useTheMovieDB();
+
+  const searchInputMovies = async () => {
+    const result = await movies.getSearchMovies(searchText, page);
+    setSearchMovies(result.results);
+    setCountPages(result.total_pages);
+  }
+
+  const genresMovie = async () => {
+    const result = await movies.getMovieGenres();
+    setGenres(result.genres);
+  }
+
+  useEffect(() => {
+    // searchInputMovies();
+    genresMovie();
+  }, []);
+
+  const handleChangeLang = (event) => {
     setLang(event.target.value);
   };
+  const hadleChangeInput = (e) => {
+    setSearchText(e.target.value);
+  }
 
   return (
     <ThemeProvider theme={DarkTheme}>
@@ -72,6 +99,8 @@ const Header = () => {
               <StyledInputBase
                 placeholder="Movies, person..."
                 inputProps={{ 'aria-label': 'search' }}
+                value={searchText}
+                onChange={hadleChangeInput}
               />
             </Search>
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
@@ -80,7 +109,7 @@ const Header = () => {
                   id="demo-simple-select"
                   size={"small"}
                   value={lang}
-                  onChange={handleChange}
+                  onChange={handleChangeLang}
                 >
                   <MenuItem value='en'>EN</MenuItem>
                   <MenuItem value='ru'>RU</MenuItem>

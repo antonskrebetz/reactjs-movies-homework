@@ -4,11 +4,45 @@ import ErrorBoundary from '../../error-boundary/error-boundary';
 import { Container, Button } from '@mui/material';
 import './movie-page.scss';
 import poster from './poster.jpg';
-import image from './image.jpg';
+import useTheMovieDB from '../../../services/TMDb-service';
+import { useState, useEffect } from 'react';
 
 
 
 const MoviePage = () => {
+  const [recommend, setRecommend] = useState([]);
+  const [genres, setGenres] = useState([]);
+  const [cast, setCast] = useState([]);
+  const [images, setImages] = useState([]);
+  const movies = new useTheMovieDB();
+
+  const recommendMovies = async () => {
+    const result = await movies.getMovieRecommendations(550);
+    setRecommend(result.results);
+  }
+
+  const genresMovie = async () => {
+    const result = await movies.getMovieGenres();
+    setGenres(result.genres);
+  }
+
+  const castMovie = async () => {
+    const result = await movies.getMovieCast(550);
+    setCast(result.cast);
+  }
+
+  const imagesMovie = async () => {
+    const result = await movies.getMovieImages(550);
+    setImages(result.backdrops);
+  }
+
+  useEffect(() => {
+    recommendMovies();
+    genresMovie();
+    castMovie();
+    imagesMovie();
+  }, []);
+
   return (
     <>
       <Container maxWidth={"xl"}>
@@ -40,20 +74,17 @@ const MoviePage = () => {
                 <Button variant="outlined" size="small" color="inherit">Show all</Button>
               </div>
               <ErrorBoundary>
-                <ActorList />
+                <ActorList data={cast.slice(0, 6)}/>
               </ErrorBoundary>
             </div>
             <div className="movie-images">
               <div className="movie-images_title">Images</div>
               <div className="movie-images_list">
-                <img src={image} alt="cadr from movie" />
-                <img src={image} alt="cadr from movie" />
-                <img src={image} alt="cadr from movie" />
-                <img src={image} alt="cadr from movie" />
-                <img src={image} alt="cadr from movie" />
-                <img src={image} alt="cadr from movie" />
-                <img src={image} alt="cadr from movie" />
-                <img src={image} alt="cadr from movie" />
+                {
+                  images.slice(0,8).map((el, i) => 
+                    <img src={`https://image.tmdb.org/t/p/w300${el.file_path}`} alt={'cadr from movie'} key={i}/>
+                  )
+                }
               </div>
             </div>
           </div>
@@ -61,7 +92,7 @@ const MoviePage = () => {
         <div>
           <div className="movie-reccomend">Recommendations</div>
           <ErrorBoundary>
-            <MovieList />
+            <MovieList data={recommend.slice(0, 5)}/>
           </ErrorBoundary>
         </div>
       </Container>

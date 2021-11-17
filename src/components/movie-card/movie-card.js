@@ -1,22 +1,27 @@
-import { Card, CardContent, CardMedia, Typography, CardActionArea } from "@mui/material";
-import poster from "./poster.jpg";
+import { Card, CardContent, CardMedia, Typography, CardActionArea, Chip } from "@mui/material";
+import { img_300, notfound_300 } from "../../services/media-service";
 
-export default function ActionAreaCard() {
+export default function MovieCard({id, vote, title, alt, poster, genres}) {
   return (
-    <Card sx={{minWidth: 250, marginBottom: 4, backgroundColor: '#151515'}}>
+    <Card sx={{width: 270, marginBottom: 4,position: 'relative', backgroundColor: '#151515'}} key={id}>
+      <Chip 
+        label={vote.toFixed(1)} 
+        color={vote >= 7 ? 'success' : vote === 0 ? 'info' : 'error'}
+        sx={{position: 'absolute', zIndex: 1000, borderRadius: 1}}
+      />
       <CardActionArea>
         <CardMedia
           component="img"
           height="400"
-          image={poster}
-          alt="green iguana"
+          image={poster ? `${img_300}${poster}` : notfound_300}
+          alt={alt}
         />
         <CardContent sx={{color: '#e5e5e5'}}>
           <Typography gutterBottom variant="h5" component="div">
-            Movie Title
+            {title}
           </Typography>
           <Typography variant="body2" color="#777">
-            Genre-1 Genre-2 Genre-3 Genre-3
+            {genres}
           </Typography>
         </CardContent>
       </CardActionArea>

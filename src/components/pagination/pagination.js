@@ -1,14 +1,22 @@
 import DarkTheme from '../mui-theme/dark-theme';
 import { Pagination, ThemeProvider } from '@mui/material';
 
+const BasicPagination = ({setPage, countPages = 10}) => {
 
-const BasicPagination = () => {
+  const handlePageChange = (page) => {
+    setPage(page);
+    window.scroll(0, 0);
+  };
+
   return (
     <ThemeProvider theme={DarkTheme}>
       <Pagination 
-        count={10} 
-        color="primary"
+        count={countPages} 
+        color="success"
+        hideNextButton
+        hidePrevButton
         sx={{marginBottom: '20px', display: 'flex', justifyContent: 'center'}}
+        onChange={e => handlePageChange(e.target.textContent)}
       />
     </ThemeProvider>
   );
