@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import { Container, InputBase, Typography, Toolbar, Box, AppBar, Select, MenuItem, FormControl, ThemeProvider } from '@mui/material';
 import DarkTheme from '../mui-theme/dark-theme';
 import './header.scss';
-import useTheMovieDB from '../../services/TMDb-service';
+import { useSelector, useDispatch } from 'react-redux';
+import { changeLanguage, changeSearchText } from '../../redux/appSlice';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -48,35 +49,23 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const Header = () => {
-  const [lang, setLang] = useState('en');
   const [searchText, setSearchText] = useState('');
-  const [searchMovies, setSearchMovies] = useState('');
-  const [page, setPage] = useState(1);
-  const [genres, setGenres] = useState([]);
-  const [countPages, setCountPages] = useState();
-  const movies = new useTheMovieDB();
+  const dispatch = useDispatch();
+  const lang = useSelector(state => state.appReducer.lang);
 
-  const searchInputMovies = async () => {
-    const result = await movies.getSearchMovies(searchText, page);
-    setSearchMovies(result.results);
-    setCountPages(result.total_pages);
-  }
-
-  const genresMovie = async () => {
-    const result = await movies.getMovieGenres();
-    setGenres(result.genres);
-  }
-
-  useEffect(() => {
-    // searchInputMovies();
-    genresMovie();
-  }, []);
-
-  const handleChangeLang = (event) => {
-    setLang(event.target.value);
+  const handleChangeLang = (e) => {
+    dispatch(changeLanguage({value: e.target.value}));
   };
+
   const hadleChangeInput = (e) => {
-    setSearchText(e.target.value);
+    setSearchText((e.target.value));
+  };
+
+  const submitSearchForm = (e) => {
+    if (e.key === 'Enter') {
+      dispatch(changeSearchText({text: searchText}));
+      setSearchText('');
+    }
   }
 
   return (
@@ -94,13 +83,14 @@ const Header = () => {
             </Typography>
             <Search sx={{ display: { xs: 'none', sm: 'flex'} }}>
               <SearchIconWrapper>
-                <SearchIcon />
+                <SearchIcon/>
               </SearchIconWrapper>
               <StyledInputBase
-                placeholder="Movies, person..."
+                placeholder={lang === 'en' ? 'Movies, person...' : 'Фильмы, актёры...'}
                 inputProps={{ 'aria-label': 'search' }}
                 value={searchText}
                 onChange={hadleChangeInput}
+                onKeyDown={submitSearchForm}
               />
             </Search>
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
@@ -108,6 +98,7 @@ const Header = () => {
                 <Select
                   id="demo-simple-select"
                   size={"small"}
+                  color={'success'}
                   value={lang}
                   onChange={handleChangeLang}
                 >
@@ -121,6 +112,6 @@ const Header = () => {
       </AppBar>
     </ThemeProvider>
   );
-}
+};
 
 export default Header;

@@ -6,7 +6,7 @@ export default function MovieCard({id, vote, title, alt, poster, genres}) {
     <Card sx={{width: 270, marginBottom: 4,position: 'relative', backgroundColor: '#151515'}} key={id}>
       <Chip 
         label={vote.toFixed(1)} 
-        color={vote >= 7 ? 'success' : vote === 0 ? 'info' : 'error'}
+        color={vote >= 7 ? 'success' : vote < 4 ? 'error' : 'warning'}
         sx={{position: 'absolute', zIndex: 1000, borderRadius: 1}}
       />
       <CardActionArea>
@@ -21,7 +21,7 @@ export default function MovieCard({id, vote, title, alt, poster, genres}) {
             {title}
           </Typography>
           <Typography variant="body2" color="#777">
-            {genres}
+            {genres.join(', ')}
           </Typography>
         </CardContent>
       </CardActionArea>

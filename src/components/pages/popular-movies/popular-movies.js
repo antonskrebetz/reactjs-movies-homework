@@ -5,6 +5,7 @@ import ErrorBoundary from '../../error-boundary/error-boundary';
 import { Container } from '@mui/material';
 import useTheMovieDB from '../../../services/TMDb-service';
 import { useState, useEffect } from 'react';
+import {useSelector} from 'react-redux';
 
 const PopularMovies = () => {
   const [popular, setPopular] = useState([]);
@@ -12,28 +13,29 @@ const PopularMovies = () => {
   const [page, setPage] = useState(1);
   const [countPages, setCountPages] = useState();
   const movies = new useTheMovieDB();
+  const lang = useSelector(state => state.appReducer.lang);
 
   const popularMovies = async () => {
-    const result = await movies.getPopularMovies(page);
+    const result = await movies.getPopularMovies(lang, page);
     setPopular(result.results);
     setCountPages(result.total_pages);
   }
 
-  const genresMovie = async () => {
+  const AllGenresMovie = async () => {
     const result = await movies.getMovieGenres();
     setGenres(result.genres);
   }
 
   useEffect(() => {
     popularMovies();
-    genresMovie();
-  }, [page]);
-  
+    AllGenresMovie();
+  }, [lang, page]);
+
   return (
     <Container maxWidth="xl">
       <ToggleButtons/>
       <ErrorBoundary>
-        <MovieList data={popular}/>
+        <MovieList data={popular} genres={genres}/>
       </ErrorBoundary>
       <BasicPagination setPage={setPage} countPages={countPages}/>
     </Container>

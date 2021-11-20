@@ -1,16 +1,10 @@
-import { createStore } from 'redux';
+import appReducer from './appSlice';
+import { configureStore } from '@reduxjs/toolkit';
 
-const initialState = {value: 0};
-
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case 'INC':
-      return {...state, value: state.value};
-    default:
-      return state;
-  };
-}
-
-const store = createStore(reducer);
+const store = configureStore({
+  reducer: {appReducer},
+  middleware: getDefaultMiddleware => getDefaultMiddleware(),
+  devTools: process.env.NODE_ENV !== 'production'
+});
 
 export default store;

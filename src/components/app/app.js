@@ -11,12 +11,12 @@ const App = () => {
   return (
     <>
       <Header />
-      <PopularMovies />
+      {/* <PopularMovies /> */}
       {/* <TopRatedMovies /> */}
       {/* <UpcomingMovies /> */}
       {/* <SearchPage /> */}
       {/* <ActorPage /> */}
-      {/* <MoviePage /> */}
+      <MoviePage />
     </>
   )
 }

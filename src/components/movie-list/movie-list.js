@@ -1,8 +1,7 @@
 import MovieCard from '../movie-card/movie-card';
 import './movie-list.scss';
 
-const MovieList = ({data}) => {
-
+const MovieList = ({data, genres}) => {
   return (
     <div className="movies">
       {

@@ -1,9 +1,11 @@
-import * as React from 'react';
+import {useState} from 'react';
 import { ThemeProvider, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import DarkTheme from '../mui-theme/dark-theme';
+import { useSelector } from 'react-redux';
 
 const ToggleButtons = () => {
-  const [alignment, setAlignment] = React.useState('popular');
+  const lang = useSelector(state => state.appReducer.lang);
+  const [alignment, setAlignment] = useState('popular');
 
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
@@ -15,14 +17,14 @@ const ToggleButtons = () => {
       <ToggleButtonGroup 
         sx={{margin: '30px 0', display: 'flex', justifyContent: 'end'}}
         size="small"
-        color="primary"
+        color="success"
         value={alignment}
         exclusive
         onChange={handleChange}
       >
-        <ToggleButton value="popular">Popular</ToggleButton>
-        <ToggleButton value="top">Top rated</ToggleButton>
-        <ToggleButton value="upcoming">Upcoming</ToggleButton>
+        <ToggleButton value="popular">{lang === 'en' ? 'Popular' : 'Популярные'}</ToggleButton>
+        <ToggleButton value="top">{lang === 'en' ? 'Top rated' : 'Топовые'}</ToggleButton>
+        <ToggleButton value="upcoming">{lang === 'en' ? 'Upcoming' : 'Ожидаемые'}</ToggleButton>
       </ToggleButtonGroup>
     </ThemeProvider>
   );
