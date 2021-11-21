@@ -9,8 +9,4 @@ export default class useTheMovieDB {
     }
     return await res.json();
   }
-
-  getMovieGenres = (lang) => {
-    return this.getResource(`${this._apiBase}genre/movie/list?${this._apiKey}&language=${lang}`);
-  }
 }

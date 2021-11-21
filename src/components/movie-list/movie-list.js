@@ -1,7 +1,10 @@
 import MovieCard from '../movie-card/movie-card';
 import './movie-list.scss';
+import { useSelector } from 'react-redux';
 
 const MovieList = ({data, genres}) => {
+  const movieGenres = useSelector(state => state.appReducer.movieGenres);
+  
   return (
     <div className="movies">
       {
@@ -13,7 +16,7 @@ const MovieList = ({data, genres}) => {
             title={el.title}
             alt={el.title} 
             poster={el.poster_path}
-            genres={el.genre_ids}
+            genres={el.genre_ids.map((item) => movieGenres.find((genre) => genre.id === item).name)}
           />)
       }
     </div>

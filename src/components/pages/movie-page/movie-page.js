@@ -7,20 +7,20 @@ import poster from './poster.jpg';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchMovie, fetchMovieImages, fetchMovieCast, fetchMovieRecommend } from '../../../redux/movieSlice';
-
+import { img_300, notfound_300 } from '../../../services/media-service';
 
 const MoviePage = () => {
   const dispatch = useDispatch();
   const lang = useSelector(state => state.appReducer.lang);
+  const movieGenres = useSelector(state => state.appReducer.movieGenres);
   const movieCast = useSelector(state => state.movieReducer.movieCast);
   const movieImages = useSelector(state => state.movieReducer.movieImages);
   const movieRecommend = useSelector(state => state.movieReducer.movieRecommend);
 
-
   useEffect(() => {
     dispatch(fetchMovieImages({id: 550}));
     dispatch(fetchMovieCast({id: 550, lang}));
-    dispatch(fetchMovieRecommend({id: 550, lang}))
+    dispatch(fetchMovieRecommend({id: 550, lang}));
   }, [dispatch, lang]);
 
   return (
@@ -62,7 +62,7 @@ const MoviePage = () => {
               <div className="movie-images_list">
                 {
                   movieImages.slice(0,8).map((el, i) => 
-                    <img src={`https://image.tmdb.org/t/p/w300${el.file_path}`} alt={'cadr from movie'} key={i}/>
+                    <img src={el.file_path ? `${img_300}${el.file_path}` : notfound_300} alt={'cadr from movie'} key={i}/>
                   )
                 }
               </div>

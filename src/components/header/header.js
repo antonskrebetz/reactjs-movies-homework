@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import { Container, InputBase, Typography, Toolbar, Box, AppBar, Select, MenuItem, FormControl, ThemeProvider } from '@mui/material';
@@ -6,6 +6,7 @@ import DarkTheme from '../mui-theme/dark-theme';
 import './header.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeLanguage, changeSearchText } from '../../redux/appSlice';
+import { fetchMovieGenres } from '../../redux/appSlice';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -67,6 +68,10 @@ const Header = () => {
       setSearchText('');
     }
   }
+
+  useEffect(() => {
+    dispatch(fetchMovieGenres({lang}));
+  }, [dispatch, lang])
 
   return (
     <ThemeProvider theme={DarkTheme}>
