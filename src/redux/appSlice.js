@@ -1,10 +1,8 @@
-import useTheMovieDB from '../services/TMDb-service';
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   lang: 'en',
-  moviesLoadingStatus: 'none',
-  query: '',
+  query: 'search',
   allMovieGenres: []
 };
 

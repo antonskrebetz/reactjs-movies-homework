@@ -3,41 +3,29 @@ import BasicPagination from '../../pagination/pagination';
 import MovieList from '../../movie-list/movie-list';
 import ErrorBoundary from '../../error-boundary/error-boundary';
 import { Container } from '@mui/material';
-import useTheMovieDB from '../../../services/TMDb-service';
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchTopMovies } from '../../../redux/topMoviesSlice';
 
 const TopRatedMovies = () => {
-  const [topRated, setTopRated] = useState([]);
-  const [genres, setGenres] = useState([]);
+  const dispatch = useDispatch();
   const [page, setPage] = useState(1);
-  const [countPages, setCountPages] = useState();
-  const lang = useSelector(state => state.appReducer.lang)
-  const movies = new useTheMovieDB();
+  const lang = useSelector(state => state.appReducer.lang);
+  const movies = useSelector(state => state.topReducer.topMovies);
+  const totalPages = useSelector(state => state.topReducer.totalPages);
 
-  const topRatedMovies = async () => {
-    const result = await movies.getTopRatedMovies(lang, page);
-    setTopRated(result.results);
-    setCountPages(result.total_pages);
-  }
-
-  const genresMovie = async () => {
-    const result = await movies.getMovieGenres();
-    setGenres(result.genres);
-  }
 
   useEffect(() => {
-    topRatedMovies();
-    genresMovie();
-  }, [lang, page]);
+    dispatch(fetchTopMovies({lang, page}))
+  }, [dispatch, lang, page]);
 
   return (
     <Container maxWidth="xl">
       <ToggleButtons/>
       <ErrorBoundary>
-        <MovieList data={topRated}/>
+        <MovieList data={movies}/>
       </ErrorBoundary>
-      <BasicPagination setPage={setPage} countPages={countPages}/>
+      <BasicPagination setPage={setPage} countPages={totalPages}/>
     </Container>
   )
 }

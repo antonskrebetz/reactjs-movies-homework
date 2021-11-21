@@ -3,41 +3,28 @@ import BasicPagination from '../../pagination/pagination';
 import MovieList from '../../movie-list/movie-list';
 import ErrorBoundary from '../../error-boundary/error-boundary';
 import { Container } from '@mui/material';
-import useTheMovieDB from '../../../services/TMDb-service';
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchUpcomingMovies } from '../../../redux/upcomingMoviesSlice';
 
 const UpcomingMovies = () => {
-  const [upcoming, setUpcoming] = useState([]);
-  const [genres, setGenres] = useState([]);
+  const dispatch = useDispatch();
   const [page, setPage] = useState(1);
-  const [countPages, setCountPages] = useState();
-  const lang = useSelector(state => state.appReducer.lang)
-  const movies = new useTheMovieDB();
-
-  const upcomingMovies = async () => {
-    const result = await movies.getUpcomingMovies(lang, page);
-    setUpcoming(result.results);
-    setCountPages(result.total_pages);
-  }
-
-  const genresMovie = async () => {
-    const result = await movies.getMovieGenres();
-    setGenres(result.genres);
-  }
+  const lang = useSelector(state => state.appReducer.lang);
+  const movies = useSelector(state => state.upcomingReducer.upcomingMovies);
+  const totalPages = useSelector(state => state.upcomingReducer.totalPages);
 
   useEffect(() => {
-    upcomingMovies();
-    genresMovie();
-  }, [lang, page]);
+    dispatch(fetchUpcomingMovies({lang, page}))
+  }, [dispatch, lang, page]);
 
   return (
     <Container maxWidth="xl">
       <ToggleButtons/>
       <ErrorBoundary>
-        <MovieList data={upcoming}/>
+        <MovieList data={movies}/>
       </ErrorBoundary>
-      <BasicPagination setPage={setPage} countPages={countPages}/>
+      <BasicPagination setPage={setPage} countPages={totalPages}/>
     </Container>
   )
 }

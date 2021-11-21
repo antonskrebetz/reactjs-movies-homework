@@ -3,47 +3,33 @@ import BasicPagination from '../../pagination/pagination';
 import MovieList from '../../movie-list/movie-list';
 import ErrorBoundary from '../../error-boundary/error-boundary';
 import { Container } from '@mui/material';
-import useTheMovieDB from '../../../services/TMDb-service';
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchSearchMovies } from '../../../redux/searchSlice';
 import './search-page.scss';
 
 const SearchPage = () => {
-  const [searchMovies, setSearchMovies] = useState([]);
-  const [genres, setGenres] = useState([]);
+  const dispatch = useDispatch();
   const [page, setPage] = useState(1);
-  const [countPages, setCountPages] = useState();
   const lang = useSelector(state => state.appReducer.lang);
   const query = useSelector(state => state.appReducer.query);
-
-  const movies = new useTheMovieDB();
-  
-  const search = async () => {
-    const result = await movies.getSearchMovies(query, lang, page);
-    setSearchMovies(result.results);
-    setCountPages(result.total_pages);
-  }
-
-  const genresMovie = async () => {
-    const result = await movies.getMovieGenres();
-    setGenres(result.genres);
-  }
+  const movies = useSelector(state => state.searchReducer.searchMovies);
+  const totalPages = useSelector(state => state.searchReducer.totalPages);
 
   useEffect(() => {
-    search();
-    genresMovie();
-  }, [query, lang, page]);
+    dispatch(fetchSearchMovies({lang, query, page}))
+  }, [dispatch, query, lang, page]);
   
   return (
     <Container maxWidth="xl">
       <ToggleButtons/>
       <ErrorBoundary>
         <h2 className="search-results">
-          {searchMovies.length ? `SEARCH RESULTS: «${query}»` : `NO RESULTS FOUND: «${query}»`}
+          {movies.length ? `SEARCH RESULTS: «${query}»` : `NO RESULTS FOUND: «${query}»`}
         </h2>
-        <MovieList data={searchMovies}/>
+        <MovieList data={movies}/>
       </ErrorBoundary>
-      <BasicPagination setPage={setPage} countPages={countPages}/>
+      <BasicPagination setPage={setPage} countPages={totalPages}/>
     </Container>
   )
 }

@@ -14,9 +14,9 @@ const App = () => {
       {/* <PopularMovies /> */}
       {/* <TopRatedMovies /> */}
       {/* <UpcomingMovies /> */}
-      {/* <SearchPage /> */}
+      <SearchPage />
       {/* <ActorPage /> */}
-      <MoviePage />
+      {/* <MoviePage /> */}
     </>
   )
 }
