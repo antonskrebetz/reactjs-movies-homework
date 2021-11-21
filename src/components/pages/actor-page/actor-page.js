@@ -1,48 +1,31 @@
 
 import MovieList from '../../movie-list/movie-list';
 import ErrorBoundary from '../../error-boundary/error-boundary';
+import {img_300, notfound_300} from '../../../services/media-service';
 import { Container } from '@mui/material';
 import './actor-page.scss';
 import avatar from './actor-avatar.jpg'
-import useTheMovieDB from '../../../services/TMDb-service';
-import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
-
+import { fetchPerson, fetchActorImages, fetchActorMovies } from '../../../redux/actorSlice';
 
 const ActorPage = () => {
-  const [actorMovies, setActorMovies] = useState([]);
-  const [actorImages, setActorImages] = useState([]);
-  const [genres, setGenres] = useState([]);
-  const lang = useSelector(state => state.appReducer.lang)
-  const movies = new useTheMovieDB();
-
-  const actorMoviesCredits = async () => {
-    const result = await movies.getPersonMovies(287, lang);
-    setActorMovies(result.cast);
-  }
-
-  const actorImagesCredits = async () => {
-    const result = await movies.getPersonImages(287);
-    setActorImages(result.profiles);
-  }
-
-  const genresMovie = async () => {
-    const result = await movies.getMovieGenres();
-    setGenres(result.genres);
-  }
+  const dispatch = useDispatch();
+  const lang = useSelector(state => state.appReducer.lang);
+  const movies = useSelector(state => state.actorReducer.actorMovies);
+  const images = useSelector(state => state.actorReducer.actorImages);
 
   useEffect(() => {
-    actorImagesCredits();
-    actorMoviesCredits();
-    genresMovie();
-  }, [lang]);
+    dispatch(fetchActorImages({id: 287}));
+    dispatch(fetchActorMovies({id: 287, lang}));
+  }, [dispatch, lang]);
 
-  const viewActorImages = actorImages.slice(0, 4).map((item, i) => {
+  const viewActorImages = images.slice(0, 4).map((item, i) => {
     return (
-      <img key={nanoid()} src={`https://image.tmdb.org/t/p/w300${item.file_path}`} alt={2324}/>
+      <img key={nanoid()} src={item.file_path ? `${img_300}${item.file_path}` : notfound_300} alt={2324}/>
     )
-  })
+  });
 
   return (
     <Container maxWidth="xl">
@@ -52,7 +35,7 @@ const ActorPage = () => {
         </div>
         <div className="actor-info">
           <h1 className="actor-name">Actor Name</h1>
-          <div className="actor-blocktitle">{lang === 'en' ? 'Birthday:' : 'Дата рождения:'}:</div>
+          <div className="actor-blocktitle">{lang === 'en' ? 'Birthday:' : 'Дата рождения:'}</div>
           <div className="actor-birth">1959-04-15</div>
           <div className="actor-blocktitle">{lang === 'en' ? 'Place of birth:' : 'Место рождения:'}</div>
           <div className="actor-birthplace">Los Angeles, California</div>
@@ -71,7 +54,7 @@ const ActorPage = () => {
           <div className="actor-known">
           {lang === 'en' ? 'Known by' : 'Роли в фильмах:'}
           </div>
-          <MovieList data={actorMovies.slice(0, 10)}/>
+          <MovieList data={movies.slice(0, 10)}/>
         </ErrorBoundary>
       </div>
     </Container>

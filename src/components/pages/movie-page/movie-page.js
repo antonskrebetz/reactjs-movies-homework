@@ -4,45 +4,24 @@ import ErrorBoundary from '../../error-boundary/error-boundary';
 import { Container, Button } from '@mui/material';
 import './movie-page.scss';
 import poster from './poster.jpg';
-import useTheMovieDB from '../../../services/TMDb-service';
-import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchMovie, fetchMovieImages, fetchMovieCast, fetchMovieRecommend } from '../../../redux/movieSlice';
 
 
 const MoviePage = () => {
-  const [recommend, setRecommend] = useState([]);
-  const [genres, setGenres] = useState([]);
-  const [cast, setCast] = useState([]);
-  const [images, setImages] = useState([]);
-  const lang = useSelector(state => state.appReducer.lang)
-  const movies = new useTheMovieDB();
+  const dispatch = useDispatch();
+  const lang = useSelector(state => state.appReducer.lang);
+  const movieCast = useSelector(state => state.movieReducer.movieCast);
+  const movieImages = useSelector(state => state.movieReducer.movieImages);
+  const movieRecommend = useSelector(state => state.movieReducer.movieRecommend);
 
-  const recommendMovies = async () => {
-    const result = await movies.getMovieRecommendations(550, lang);
-    setRecommend(result.results);
-  }
-
-  const genresMovie = async () => {
-    const result = await movies.getMovieGenres();
-    setGenres(result.genres);
-  }
-
-  const castMovie = async () => {
-    const result = await movies.getMovieCast(550, lang);
-    setCast(result.cast);
-  }
-
-  const imagesMovie = async () => {
-    const result = await movies.getMovieImages(550);
-    setImages(result.backdrops);
-  }
 
   useEffect(() => {
-    recommendMovies();
-    genresMovie();
-    castMovie();
-    imagesMovie();
-  }, [lang]);
+    dispatch(fetchMovieImages({id: 550}));
+    dispatch(fetchMovieCast({id: 550, lang}));
+    dispatch(fetchMovieRecommend({id: 550, lang}))
+  }, [dispatch, lang]);
 
   return (
     <>
@@ -75,14 +54,14 @@ const MoviePage = () => {
                 <Button variant="outlined" size="small" color="inherit">Show all</Button>
               </div>
               <ErrorBoundary>
-                <ActorList data={cast.slice(0, 6)}/>
+                <ActorList data={movieCast.slice(0, 6)}/>
               </ErrorBoundary>
             </div>
             <div className="movie-images">
               <div className="movie-images_title">{lang === 'en' ? 'Images' : 'Кадры фильма'}</div>
               <div className="movie-images_list">
                 {
-                  images.slice(0,8).map((el, i) => 
+                  movieImages.slice(0,8).map((el, i) => 
                     <img src={`https://image.tmdb.org/t/p/w300${el.file_path}`} alt={'cadr from movie'} key={i}/>
                   )
                 }
@@ -93,7 +72,7 @@ const MoviePage = () => {
         <div>
           <div className="movie-reccomend">{lang === 'en' ? 'Recommendations' : 'Рекомендации'}</div>
           <ErrorBoundary>
-            <MovieList data={recommend.slice(0, 5)}/>
+            <MovieList data={movieRecommend.slice(0, 5)}/>
           </ErrorBoundary>
         </div>
       </Container>
