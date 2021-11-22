@@ -12,7 +12,7 @@ import { img_300, notfound_300 } from '../../../services/media-service';
 const MoviePage = () => {
   const dispatch = useDispatch();
   const lang = useSelector(state => state.appReducer.lang);
-  const movieGenres = useSelector(state => state.appReducer.movieGenres);
+  const {imagesStatus, castStatus, recommendStatus} = useSelector(state => state.movieReducer);
   const movieCast = useSelector(state => state.movieReducer.movieCast);
   const movieImages = useSelector(state => state.movieReducer.movieImages);
   const movieRecommend = useSelector(state => state.movieReducer.movieRecommend);
@@ -54,12 +54,14 @@ const MoviePage = () => {
                 <Button variant="outlined" size="small" color="inherit">Show all</Button>
               </div>
               <ErrorBoundary>
+                {castStatus === 'loading' && <div className="loading">Loading...</div>}
                 <ActorList data={movieCast.slice(0, 6)}/>
               </ErrorBoundary>
             </div>
             <div className="movie-images">
               <div className="movie-images_title">{lang === 'en' ? 'Images' : 'Кадры фильма'}</div>
               <div className="movie-images_list">
+              {imagesStatus === 'loading' && <div className="loading">Loading...</div>}
                 {
                   movieImages.slice(0,8).map((el, i) => 
                     <img src={el.file_path ? `${img_300}${el.file_path}` : notfound_300} alt={'cadr from movie'} key={i}/>
@@ -72,6 +74,7 @@ const MoviePage = () => {
         <div>
           <div className="movie-reccomend">{lang === 'en' ? 'Recommendations' : 'Рекомендации'}</div>
           <ErrorBoundary>
+            {recommendStatus === 'loading' && <div className="loading">Loading...</div>}
             <MovieList data={movieRecommend.slice(0, 5)}/>
           </ErrorBoundary>
         </div>

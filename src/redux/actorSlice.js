@@ -85,8 +85,9 @@ const actorSlice = createSlice({
       state.personStatus = 'resolved';
       state.searchMovies = action.payload.results;
     },
-    [fetchPerson.rejected]: (state) => {
-      state.personError = 'error';
+    [fetchPerson.rejected]: (state, action) => {
+      state.personStatus = 'rejected';
+      state.personError = action.payload;
     },
     [fetchActorImages.pending]: (state) => {
       state.imagesStatus = 'loading';
@@ -96,8 +97,9 @@ const actorSlice = createSlice({
       state.imagesStatus = 'resolved';
       state.actorImages = action.payload.profiles;
     },
-    [fetchActorImages.rejected]: (state) => {
-      state.imagesError = 'error';
+    [fetchActorImages.rejected]: (state, action) => {
+      state.imagesStatus = 'rejected';
+      state.imagesError = action.payload;
     },
     [fetchActorMovies.pending]: (state) => {
       state.moviesStatus = 'loading';
@@ -107,8 +109,9 @@ const actorSlice = createSlice({
       state.moviesStatus = 'resolved';
       state.actorMovies = action.payload.cast;
     },
-    [fetchActorMovies.rejected]: (state) => {
-      state.moviesError = 'error';
+    [fetchActorMovies.rejected]: (state, action) => {
+      state.moviesStatus = 'rejected';
+      state.moviesError =  action.payload;
     },
   }
 });

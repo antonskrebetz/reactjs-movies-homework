@@ -11,6 +11,7 @@ const UpcomingMovies = () => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const lang = useSelector(state => state.appReducer.lang);
+  const { status } = useSelector(state => state.upcomingReducer);
   const movies = useSelector(state => state.upcomingReducer.upcomingMovies);
   const totalPages = useSelector(state => state.upcomingReducer.totalPages);
 
@@ -22,6 +23,7 @@ const UpcomingMovies = () => {
     <Container maxWidth="xl">
       <ToggleButtons/>
       <ErrorBoundary>
+        {status === 'loading' && <div className="loading">Loading...</div>}
         <MovieList data={movies}/>
       </ErrorBoundary>
       <BasicPagination setPage={setPage} countPages={totalPages}/>

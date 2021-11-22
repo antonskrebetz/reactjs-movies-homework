@@ -13,6 +13,7 @@ const SearchPage = () => {
   const [page, setPage] = useState(1);
   const lang = useSelector(state => state.appReducer.lang);
   const query = useSelector(state => state.appReducer.query);
+  const { status } = useSelector(state => state.searchReducer);
   const movies = useSelector(state => state.searchReducer.searchMovies);
   const totalPages = useSelector(state => state.searchReducer.totalPages);
 
@@ -27,6 +28,7 @@ const SearchPage = () => {
         <h2 className="search-results">
           {movies.length ? `SEARCH RESULTS: «${query}»` : `NO RESULTS FOUND: «${query}»`}
         </h2>
+        {status === 'loading' && <div className="loading">Loading...</div>}
         <MovieList data={movies}/>
       </ErrorBoundary>
       <BasicPagination setPage={setPage} countPages={totalPages}/>

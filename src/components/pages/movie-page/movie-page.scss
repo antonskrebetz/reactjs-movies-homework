@@ -84,9 +84,15 @@
         justify-content: center; 
       }
 
+      &::after {
+        content: '';
+        width: 250px;
+        flex: auto;
+      }
+
       & img {
         height: auto;
-        max-width: 250px;
+        width: 250px;
         border-radius: 6px;
 
         @media (max-width: 605px) {

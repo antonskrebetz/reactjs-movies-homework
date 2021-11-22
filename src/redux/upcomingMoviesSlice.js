@@ -47,8 +47,9 @@ const upcomingSlice = createSlice({
       state.upcomingMovies = action.payload.results;
       state.totalPages = action.payload.total_pages;
     },
-    [fetchUpcomingMovies.rejected]: (state) => {
-      state.status = 'error';
+    [fetchUpcomingMovies.rejected]: (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
     },
   }
 });

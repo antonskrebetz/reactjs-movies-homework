@@ -47,8 +47,9 @@ const topSlice = createSlice({
       state.topMovies = action.payload.results;
       state.totalPages = action.payload.total_pages;
     },
-    [fetchTopMovies.rejected]: (state) => {
-      state.status = 'error';
+    [fetchTopMovies.rejected]: (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
     },
   }
 });

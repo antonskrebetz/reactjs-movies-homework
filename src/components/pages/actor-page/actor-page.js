@@ -13,6 +13,7 @@ import { fetchPerson, fetchActorImages, fetchActorMovies } from '../../../redux/
 const ActorPage = () => {
   const dispatch = useDispatch();
   const lang = useSelector(state => state.appReducer.lang);
+  const {imagesStatus, moviesStatus} = useSelector(state => state.actorReducer)
   const movies = useSelector(state => state.actorReducer.actorMovies);
   const images = useSelector(state => state.actorReducer.actorImages);
 
@@ -45,6 +46,7 @@ const ActorPage = () => {
           </div>
           <div className="actor-blocktitle">{lang === 'en' ? 'Photos:' : 'Фотографии:'}</div>
           <div className="actor-photos">
+            {imagesStatus === 'loading' && <div className="loading">Loading...</div>}
             {viewActorImages}
           </div>
         </div>
@@ -52,8 +54,9 @@ const ActorPage = () => {
       <div className="actor-works">
         <ErrorBoundary>
           <div className="actor-known">
-          {lang === 'en' ? 'Known by' : 'Роли в фильмах:'}
+            {lang === 'en' ? 'Known by' : 'Роли в фильмах:'}
           </div>
+          {moviesStatus === 'loading' && <div className="loading">Loading...</div>}
           <MovieList data={movies.slice(0, 10)}/>
         </ErrorBoundary>
       </div>

@@ -13,8 +13,8 @@ const App = () => {
       <Header />
       {/* <PopularMovies /> */}
       {/* <TopRatedMovies /> */}
-      {/* <UpcomingMovies /> */}
-      <SearchPage />
+      <UpcomingMovies />
+      {/* <SearchPage /> */}
       {/* <ActorPage /> */}
       {/* <MoviePage /> */}
     </>

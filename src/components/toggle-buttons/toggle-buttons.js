@@ -15,7 +15,7 @@ const ToggleButtons = () => {
   return (
     <ThemeProvider theme={DarkTheme}>
       <ToggleButtonGroup 
-        sx={{margin: '30px 0', display: 'flex', justifyContent: 'end'}}
+        sx={{margin: '30px 0', display: 'flex', justifyContent: {xs: 'center', sm: 'end'}}}
         size="small"
         color="success"
         value={alignment}

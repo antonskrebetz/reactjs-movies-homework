@@ -32,11 +32,7 @@ const initialState = {
 const popularSlice = createSlice({
   name: 'popular',
   initialState,
-  reducers: {
-    popularChangePages(state, action) {
-      state.page = action.payload.value
-    },
-  },
+  reducers: {},
   extraReducers: {
     [fetchPopularMovies.pending]: (state) => {
       state.status = 'loading';
@@ -47,12 +43,12 @@ const popularSlice = createSlice({
       state.popularMovies = action.payload.results;
       state.totalPages = action.payload.total_pages;
     },
-    [fetchPopularMovies.rejected]: (state) => {
-      state.status = 'error';
+    [fetchPopularMovies.rejected]: (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
     },
   }
 });
 
-const {actions, reducer} = popularSlice;
+const {reducer} = popularSlice;
 export default reducer;
-export const {popularChangePages} = actions;

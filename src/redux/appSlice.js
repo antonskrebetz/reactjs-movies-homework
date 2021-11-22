@@ -49,8 +49,9 @@ const appSlice = createSlice({
       state.genresStatus = 'resolved';
       state.movieGenres = action.payload.genres;
     },
-    [fetchMovieGenres.rejected]: (state) => {
-      state.genresError = 'error';
+    [fetchMovieGenres.rejected]: (state, action) => {
+      state.genresStatus = 'rejected';
+      state.genresError = action.payload;
     },
   }
 });

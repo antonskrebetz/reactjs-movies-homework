@@ -106,8 +106,9 @@ const movieSlice = createSlice({
       state.movieStatus = 'resolved';
       state.searchMovies = action.payload.results;
     },
-    [fetchMovie.rejected]: (state) => {
-      state.movieError = 'error';
+    [fetchMovie.rejected]: (state, action) => {
+      state.movieStatus = 'rejected';
+      state.movieError = action.payload;
     },
     [fetchMovieImages.pending]: (state) => {
       state.imagesStatus = 'loading';
@@ -117,8 +118,9 @@ const movieSlice = createSlice({
       state.imagesStatus = 'resolved';
       state.movieImages = action.payload.backdrops;
     },
-    [fetchMovieImages.rejected]: (state) => {
-      state.imagesError = 'error';
+    [fetchMovieImages.rejected]: (state, action) => {
+      state.imagesStatus = 'rejected';
+      state.imagesError = action.payload;
     },
     [fetchMovieCast.pending]: (state) => {
       state.castStatus = 'loading';
@@ -128,8 +130,9 @@ const movieSlice = createSlice({
       state.castStatus = 'resolved';
       state.movieCast = action.payload.cast;
     },
-    [fetchMovieCast.rejected]: (state) => {
-      state.castError = 'error';
+    [fetchMovieCast.rejected]: (state, action) => {
+      state.castStatus = 'rejected';
+      state.castError = action.payload;
     },
     [fetchMovieRecommend.pending]: (state) => {
       state.recommendStatus = 'loading';
@@ -139,8 +142,9 @@ const movieSlice = createSlice({
       state.recommendStatus = 'resolved';
       state.movieRecommend = action.payload.results;
     },
-    [fetchMovieRecommend.rejected]: (state) => {
-      state.recommendError = 'error';
+    [fetchMovieRecommend.rejected]: (state, action) => {
+      state.recommendStatus = 'rejected';
+      state.recommendError = action.payload;
     },
   }
 });

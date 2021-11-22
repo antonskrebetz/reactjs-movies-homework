@@ -86,7 +86,7 @@ const Header = () => {
             >
               movie app
             </Typography>
-            <Search sx={{ display: { xs: 'none', sm: 'flex'} }}>
+            <Search sx={{ display: { xs: 'flex'} }}>
               <SearchIconWrapper>
                 <SearchIcon/>
               </SearchIconWrapper>
@@ -98,7 +98,7 @@ const Header = () => {
                 onKeyDown={submitSearchForm}
               />
             </Search>
-            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <Box sx={{ display: { xs: 'flex', md: 'flex' } }}>
               <FormControl fullWidth>
                 <Select
                   id="demo-simple-select"

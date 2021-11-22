@@ -47,8 +47,9 @@ const searchSlice = createSlice({
       state.searchMovies = action.payload.results;
       state.totalPages = action.payload.total_pages;
     },
-    [fetchSearchMovies.rejected]: (state) => {
-      state.status = 'error';
+    [fetchSearchMovies.rejected]: (state, action) => {
+      state.status = 'rejected';
+      state.status = action.payload;
     },
   }
 });

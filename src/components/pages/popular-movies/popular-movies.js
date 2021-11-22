@@ -11,6 +11,7 @@ const PopularMovies = () => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const lang = useSelector(state => state.appReducer.lang);
+  const {status, error} = useSelector(state => state.popularReducer);
   const totalPages = useSelector(state => state.popularReducer.totalPages);
   const movies = useSelector(state => state.popularReducer.popularMovies);
 
@@ -21,6 +22,8 @@ const PopularMovies = () => {
   return (
     <Container maxWidth="xl">
       <ToggleButtons/>
+      {status === 'loading' && <div className="loading">Loading...</div>}
+      {error && <div>Something went wrong: {error}</div>}
       <ErrorBoundary>
         <MovieList data={movies}/>
       </ErrorBoundary>
