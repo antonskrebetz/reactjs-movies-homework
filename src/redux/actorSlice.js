@@ -1,59 +1,30 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { useHttp } from '../services/http.hook';
 
 const _apiBase = 'https://api.themoviedb.org/3/';
 const _apiKey = 'api_key=a60262500ac52b0699a0d49e7f802ffa';
 
 export const fetchPerson = createAsyncThunk(
   'actor/fetchPerson',
-  async function({id, lang}, {rejectWithValue}) {
-    try {
-      const response = await fetch(`${_apiBase}person/${id}?${_apiKey}&language=${lang}`);
-
-      if (!response.ok) {
-        throw new Error('Server Error!');
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
+  ({id, lang}) => {
+    const {request} = useHttp();
+    return request(`${_apiBase}person/${id}?${_apiKey}&language=${lang}`);
   }
 );
 
 export const fetchActorImages = createAsyncThunk(
   'actor/fetchActorImages',
-  async function({id}, {rejectWithValue}) {
-    try {
-      const response = await fetch(`${_apiBase}person/${id}/images?${_apiKey}`);
-
-      if (!response.ok) {
-        throw new Error('Server Error!');
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
+  ({id}) => {
+    const {request} = useHttp();
+    return request(`${_apiBase}person/${id}/images?${_apiKey}`);
   }
 );
 
 export const fetchActorMovies = createAsyncThunk(
   'actor/fetchActorMovies',
-  async function({id, lang}, {rejectWithValue}) {
-    try {
-      const response = await fetch(`${_apiBase}person/${id}/movie_credits?${_apiKey}&language=${lang}`);
-
-      if (!response.ok) {
-        throw new Error('Server Error!');
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
+  async ({id, lang}) => {
+    const {request} = useHttp();
+    return request(`${_apiBase}person/${id}/movie_credits?${_apiKey}&language=${lang}`);
   }
 );
 
@@ -71,11 +42,7 @@ const initialState = {
 const actorSlice = createSlice({
   name: 'actor',
   initialState,
-  reducers: {
-    actorChangePages(state, action) {
-      state.page = action.payload.value
-    },
-  },
+  reducers: {},
   extraReducers: {
     [fetchPerson.pending]: (state) => {
       state.personStatus = 'loading';
@@ -116,6 +83,5 @@ const actorSlice = createSlice({
   }
 });
 
-const {actions, reducer} = actorSlice;
+const {reducer} = actorSlice;
 export default reducer;
-export const {actorChangePages} = actions;

@@ -1,23 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { useHttp } from '../services/http.hook';
 
 const _apiBase = 'https://api.themoviedb.org/3/';
 const _apiKey = 'api_key=a60262500ac52b0699a0d49e7f802ffa';
 
 export const fetchSearchMovies = createAsyncThunk(
   'search/fetchSearchMovies',
-  async function({lang, query, page}, {rejectWithValue}) {
-    try {
-      const response = await fetch(`${_apiBase}search/movie?${_apiKey}&language=${lang}&query=${query}&page=${page}&include_adult=false`);;
-
-      if (!response.ok) {
-        throw new Error('Server Error!');
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
+  ({lang, query, page}) => {
+    const {request} = useHttp();
+    return request(`${_apiBase}search/movie?${_apiKey}&language=${lang}&query=${query}&page=${page}&include_adult=false`);
   }
 );
 
@@ -32,11 +23,7 @@ const initialState = {
 const searchSlice = createSlice({
   name: 'search',
   initialState,
-  reducers: {
-    searchChangePages(state, action) {
-      state.page = action.payload.value
-    },
-  },
+  reducers: {},
   extraReducers: {
     [fetchSearchMovies.pending]: (state) => {
       state.status = 'loading';
@@ -54,6 +41,5 @@ const searchSlice = createSlice({
   }
 });
 
-const {actions, reducer} = searchSlice;
+const {reducer} = searchSlice;
 export default reducer;
-export const {searchChangePages} = actions;

@@ -11,9 +11,9 @@ const App = () => {
   return (
     <>
       <Header />
-      {/* <PopularMovies /> */}
+      <PopularMovies />
       {/* <TopRatedMovies /> */}
-      <UpcomingMovies />
+      {/* <UpcomingMovies /> */}
       {/* <SearchPage /> */}
       {/* <ActorPage /> */}
       {/* <MoviePage /> */}

@@ -1,23 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { useHttp } from '../services/http.hook';
 
 const _apiBase = 'https://api.themoviedb.org/3/';
 const _apiKey = 'api_key=a60262500ac52b0699a0d49e7f802ffa';
 
 export const fetchMovieGenres = createAsyncThunk(
   'app/fetchMovieGenres',
-  async function({lang}, {rejectWithValue}) {
-    try {
-      const response = await fetch(`${_apiBase}genre/movie/list?${_apiKey}&language=${lang}`);
-
-      if (!response.ok) {
-        throw new Error('Server Error!');
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
+  ({lang}) => {
+    const {request} = useHttp()
+    return request(`${_apiBase}genre/movie/list?${_apiKey}&language=${lang}`);
   }
 )
 

@@ -1,77 +1,38 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { useHttp } from '../services/http.hook';
 
 const _apiBase = 'https://api.themoviedb.org/3/';
 const _apiKey = 'api_key=a60262500ac52b0699a0d49e7f802ffa';
 
 export const fetchMovie = createAsyncThunk(
   'movie/fetchMovie',
-  async function({id, lang}, {rejectWithValue}) {
-    try {
-      const response = await fetch(`${_apiBase}movie/${id}?${_apiKey}&language=${lang}`);
-
-      if (!response.ok) {
-        throw new Error('Server Error!');
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
+  ({id, lang}) => {
+    const {request} = useHttp();
+    return request(`${_apiBase}movie/${id}?${_apiKey}&language=${lang}`);
   }
 );
 
 export const fetchMovieImages = createAsyncThunk(
   'movie/fetchMovieImages',
-  async function({id}, {rejectWithValue}) {
-    try {
-      const response = await fetch(`${_apiBase}movie/${id}/images?${_apiKey}`);
-
-      if (!response.ok) {
-        throw new Error('Server Error!');
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
+  ({id}) => {
+    const {request} = useHttp();
+    return request(`${_apiBase}movie/${id}/images?${_apiKey}`);
   }
 );
 
 export const fetchMovieCast = createAsyncThunk(
   'movie/fetchMovieCast',
-  async function({id, lang}, {rejectWithValue}) {
-    try {
-      const response = await fetch(`${_apiBase}movie/${id}/credits?${_apiKey}&language=${lang}`);
-
-      if (!response.ok) {
-        throw new Error('Server Error!');
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
+  ({id, lang}) => {
+    const {request} = useHttp();
+    return request(`${_apiBase}movie/${id}/credits?${_apiKey}&language=${lang}`);
   }
 );
 
 export const fetchMovieRecommend = createAsyncThunk(
   'movie/fetchMovieRecommend',
-  async function({id, lang}, {rejectWithValue}) {
-    try {
-      const response = await fetch(`${_apiBase}movie/${id}/recommendations?${_apiKey}&language=${lang}`);
-
-      if (!response.ok) {
-        throw new Error('Server Error!');
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
+  async ({id, lang}) => {
+    const {request} = useHttp();
+    return request(`${_apiBase}movie/${id}/recommendations?${_apiKey}&language=${lang}`);
   }
 );
 

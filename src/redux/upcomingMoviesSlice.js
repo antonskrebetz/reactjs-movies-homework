@@ -1,23 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { useHttp } from '../services/http.hook';
 
 const _apiBase = 'https://api.themoviedb.org/3/';
 const _apiKey = 'api_key=a60262500ac52b0699a0d49e7f802ffa';
 
 export const fetchUpcomingMovies = createAsyncThunk(
   'upcoming/fetchUpcomingMovies',
-  async function({lang, page}, {rejectWithValue}) {
-    try {
-      const response = await fetch(`${_apiBase}movie/upcoming?${_apiKey}&language=${lang}&page=${page}`);
-
-      if (!response.ok) {
-        throw new Error('Server Error!');
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
+  ({lang, page}) => {
+    const {request} = useHttp()
+    return request(`${_apiBase}movie/upcoming?${_apiKey}&language=${lang}&page=${page}`);
   }
 );
 
@@ -32,11 +23,7 @@ const initialState = {
 const upcomingSlice = createSlice({
   name: 'upcoming',
   initialState,
-  reducers: {
-    upcomingChangePages(state, action) {
-      state.page = action.payload.value
-    },
-  },
+  reducers: {},
   extraReducers: {
     [fetchUpcomingMovies.pending]: (state) => {
       state.status = 'loading';
@@ -54,6 +41,5 @@ const upcomingSlice = createSlice({
   }
 });
 
-const {actions, reducer} = upcomingSlice;
+const {reducer} = upcomingSlice;
 export default reducer;
-export const {upcomingChangePages} = actions;

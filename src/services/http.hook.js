@@ -1,17 +1,18 @@
-const getResource = async (url) => {
-  
-  try {
-    const response = await fetch(url);
+export const useHttp = () => {
 
-    if (!response.ok) {
-      throw new Error(`Could not fetch ${url}, status: ${response.status}`)
-    }
+  const request = async (url, method = 'GET', body = null, headers = {'Content-Type': 'application/json'}) => {
+    try {
+      const response = await fetch(url, {method, body, headers});
+      if (!response.ok) {
+          throw new Error(`Could not fetch ${url}, status: ${response.status}`);
+      }
 
-    const data = await response.json();
-    return data;
-  } catch (error) {
-      return error.message;
+      const data = await response.json();
+      return data;
+    } catch(e) {
+      throw e;
     }
+  };
+
+  return {request};
 }
-
-export default getResource;
