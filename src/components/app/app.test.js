@@ -1,18 +1,24 @@
 import { render, screen } from '@testing-library/react';
+import {Provider} from 'react-redux';
+import store from '../../redux/store';
 import App from './app';
 
 describe('Test App component', () => {
   beforeEach(() => {
-    render(<App/>);
+    render(
+      <Provider store={store}>
+        <App/>
+      </Provider>
+    );
   })
 
-  test('have search input', () => {
+  test('has a search input', () => {
     const input = screen.getByRole('textbox');
-    expect(input).toBeInTheDocument();
+    expect(input).toBeDefined();
   });
 
-  test('have pagination', () => {
-    const langBtn = screen.getByRole('list');
-    expect(langBtn).toBeInTheDocument();
+  test('has an app title', () => {
+    const appTitle = screen.getByText(/movie app/i);
+    expect(appTitle).toBeDefined();
   });
 });

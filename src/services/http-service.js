@@ -1,4 +1,4 @@
-export const useHttp = () => {
+export const httpService = () => {
 
   const request = async (url, method = 'GET', body = null, headers = {'Content-Type': 'application/json'}) => {
     try {

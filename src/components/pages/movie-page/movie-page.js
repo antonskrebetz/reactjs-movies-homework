@@ -4,15 +4,18 @@ import ErrorBoundary from '../../error-boundary/error-boundary';
 import { Container, Button } from '@mui/material';
 import './movie-page.scss';
 import poster from './poster.jpg';
+import { SpinnerCircularFixed } from 'spinners-react';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchMovie, fetchMovieImages, fetchMovieCast, fetchMovieRecommend } from '../../../redux/movieSlice';
+import { fetchMovie, fetchMovieImages, fetchMovieCast, fetchMovieRecommend, toggleCastList } from '../../../redux/movieSlice';
 import { img_300, notfound_300 } from '../../../services/media-service';
 
 const MoviePage = () => {
   const dispatch = useDispatch();
   const lang = useSelector(state => state.appReducer.lang);
   const {imagesStatus, castStatus, recommendStatus} = useSelector(state => state.movieReducer);
+  const isShortListCast = useSelector(state => state.movieReducer.isShortListCast);
+  const shortListCast = useSelector(state => state.movieReducer.shortListCast);
   const movieCast = useSelector(state => state.movieReducer.movieCast);
   const movieImages = useSelector(state => state.movieReducer.movieImages);
   const movieRecommend = useSelector(state => state.movieReducer.movieRecommend);
@@ -22,6 +25,10 @@ const MoviePage = () => {
     dispatch(fetchMovieCast({id: 550, lang}));
     dispatch(fetchMovieRecommend({id: 550, lang}));
   }, [dispatch, lang]);
+
+  const togglelCastItems = () => {
+    dispatch(toggleCastList());
+  }
 
   return (
     <>
@@ -51,17 +58,17 @@ const MoviePage = () => {
             <div className="movie-cast">
               <div className="movie-cast_header">
                 <div className="movie-cast_title">{lang === 'en' ? 'Top Billed Cast' : 'Популярные актёры'}</div>
-                <Button variant="outlined" size="small" color="inherit">Show all</Button>
+                <Button variant="outlined" size="small" color="inherit" onClick={togglelCastItems}>{isShortListCast ? 'Show all' : 'Hide all'}</Button>
               </div>
               <ErrorBoundary>
-                {castStatus === 'loading' && <div className="loading">Loading...</div>}
-                <ActorList data={movieCast.slice(0, 6)}/>
+                {castStatus === 'loading' && <SpinnerCircularFixed style={{display: 'block', margin: '40px auto'}}/>}
+                <ActorList data={isShortListCast ? shortListCast : movieCast}/>
               </ErrorBoundary>
             </div>
             <div className="movie-images">
               <div className="movie-images_title">{lang === 'en' ? 'Images' : 'Кадры фильма'}</div>
               <div className="movie-images_list">
-              {imagesStatus === 'loading' && <div className="loading">Loading...</div>}
+                {imagesStatus === 'loading' && <SpinnerCircularFixed style={{display: 'block', margin: '40px auto'}}/>}
                 {
                   movieImages.slice(0,8).map((el, i) => 
                     <img src={el.file_path ? `${img_300}${el.file_path}` : notfound_300} alt={'cadr from movie'} key={i}/>
@@ -74,7 +81,7 @@ const MoviePage = () => {
         <div>
           <div className="movie-reccomend">{lang === 'en' ? 'Recommendations' : 'Рекомендации'}</div>
           <ErrorBoundary>
-            {recommendStatus === 'loading' && <div className="loading">Loading...</div>}
+            {recommendStatus === 'loading' && <SpinnerCircularFixed style={{display: 'block', margin: '40px auto'}}/>}
             <MovieList data={movieRecommend.slice(0, 5)}/>
           </ErrorBoundary>
         </div>

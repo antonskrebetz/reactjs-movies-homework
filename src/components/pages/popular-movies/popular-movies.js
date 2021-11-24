@@ -2,6 +2,7 @@ import ToggleButtons from '../../toggle-buttons/toggle-buttons';
 import BasicPagination from '../../pagination/pagination';
 import MovieList from '../../movie-list/movie-list';
 import ErrorBoundary from '../../error-boundary/error-boundary';
+import { SpinnerCircularFixed } from 'spinners-react';
 import { Container } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector} from 'react-redux';
@@ -22,8 +23,7 @@ const PopularMovies = () => {
   return (
     <Container maxWidth="xl">
       <ToggleButtons/>
-      {status === 'loading' && <div className="loading">Loading...</div>}
-      {error && <div>Something went wrong: {error}</div>}
+      {status === 'loading' && <SpinnerCircularFixed style={{display: 'block', margin: '40px auto'}}/>}
       <ErrorBoundary>
         <MovieList data={movies}/>
       </ErrorBoundary>

@@ -1,23 +1,29 @@
 import { render, screen } from '@testing-library/react';
+import {Provider} from 'react-redux';
+import store from '../../../redux/store';
 import MoviePage from './movie-page';
 
 describe('Test MoviePage component', () => {
   beforeEach(() => {
-    render(<MoviePage/>);
+    render(
+      <Provider store={store}>  
+        <MoviePage/>
+      </Provider>
+    );
   })
 
-  test('have movie description', () => {
+  test('has a movie description', () => {
     const description = screen.getByText(/Lorem /i);
-    expect(description).toBeInTheDocument();
+    expect(description).toBeDefined();
   });
 
-  test('have top cast', () => {
+  test('has a top cast', () => {
     const cast = screen.getByText(/cast/i);
-    expect(cast).toBeInTheDocument();
+    expect(cast).toBeDefined();
   });
 
-  test('have recommendations', () => {
+  test('has a recommendations block', () => {
     const recom = screen.getByText(/recommendations/i);
-    expect(recom).toBeInTheDocument();
+    expect(recom).toBeDefined();
   });
 });

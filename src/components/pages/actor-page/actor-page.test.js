@@ -1,23 +1,29 @@
 import { render, screen } from '@testing-library/react';
+import {Provider} from 'react-redux';
+import store from '../../../redux/store';
 import ActorPage from './actor-page';
 
 describe('Test ActorPage component', () => {
   beforeEach(() => {
-    render(<ActorPage/>);
+    render(
+      <Provider store={store}>
+        <ActorPage/>
+      </Provider>
+    );
   })
 
-  test('have actor name', () => {
+  test('has an actor name', () => {
     const title = screen.getByText('Actor Name');
-    expect(title).toBeInTheDocument();
+    expect(title).toBeDefined();
   });
 
-  test('have biography', () => {
+  test('has a biography', () => {
     const biography = screen.getByText(/Lorem/);
-    expect(biography).toBeInTheDocument();
+    expect(biography).toBeDefined();
   });
 
-  test('have known by', () => {
+  test('has s known by block', () => {
     const known = screen.getByText(/known/i)
-    expect(known).toBeInTheDocument();
+    expect(known).toBeDefined();
   });
 });

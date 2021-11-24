@@ -2,6 +2,7 @@ import ToggleButtons from '../../toggle-buttons/toggle-buttons';
 import BasicPagination from '../../pagination/pagination';
 import MovieList from '../../movie-list/movie-list';
 import ErrorBoundary from '../../error-boundary/error-boundary';
+import { SpinnerCircularFixed } from 'spinners-react';
 import { Container } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -28,7 +29,7 @@ const SearchPage = () => {
         <h2 className="search-results">
           {movies.length ? `SEARCH RESULTS: «${query}»` : `NO RESULTS FOUND: «${query}»`}
         </h2>
-        {status === 'loading' && <div className="loading">Loading...</div>}
+        {status === 'loading' && <SpinnerCircularFixed style={{display: 'block', margin: '40px auto'}}/>}
         <MovieList data={movies}/>
       </ErrorBoundary>
       <BasicPagination setPage={setPage} countPages={totalPages}/>

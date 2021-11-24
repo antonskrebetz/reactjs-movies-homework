@@ -6,8 +6,8 @@ describe('Test ErrorMessage component', () => {
     render(<ErrorMessage/>);
   })
 
-  test('have error image', () => {
-    const img = screen.getByRole('img');
-    expect(img).toBeInTheDocument();
+  test('has an error image', () => {
+    const error = screen.getByRole('img');
+    expect(error).toBeDefined();
   });
 });

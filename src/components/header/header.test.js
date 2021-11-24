@@ -1,23 +1,29 @@
 import { render, screen } from '@testing-library/react';
+import {Provider} from 'react-redux';
+import store from '../../redux/store';
 import Header from './header'
 
 describe('Test Header component', () => {
   beforeEach(() => {
-    render(<Header/>);
+    render(
+      <Provider store={store}>
+        <Header/>
+      </Provider>
+    );
   })
 
-  test('have main title', () => {
+  test('has a main title', () => {
     const title = screen.getByText(/Movie app/i);
-    expect(title).toBeInTheDocument();
+    expect(title).toBeDefined();
   });
 
-  test('have search input', () => {
-    const langBtn = screen.getByPlaceholderText(/Movies/i)
-    expect(langBtn).toBeInTheDocument();
+  test('has a search input', () => {
+    const input = screen.getByPlaceholderText(/Movies/i);
+    expect(input).toBeDefined();
   });
 
-  test('have lang button', () => {
+  test('has a toggle language button', () => {
     const langBtn = screen.getByRole('button');
-    expect(langBtn).toBeInTheDocument();
+    expect(langBtn).toBeDefined();
   });
 });

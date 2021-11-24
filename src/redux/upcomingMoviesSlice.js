@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { useHttp } from '../services/http.hook';
+import { httpService } from '../services/http-service';
 
 const _apiBase = 'https://api.themoviedb.org/3/';
 const _apiKey = 'api_key=a60262500ac52b0699a0d49e7f802ffa';
@@ -7,7 +7,7 @@ const _apiKey = 'api_key=a60262500ac52b0699a0d49e7f802ffa';
 export const fetchUpcomingMovies = createAsyncThunk(
   'upcoming/fetchUpcomingMovies',
   ({lang, page}) => {
-    const {request} = useHttp()
+    const {request} = httpService()
     return request(`${_apiBase}movie/upcoming?${_apiKey}&language=${lang}&page=${page}`);
   }
 );
@@ -15,7 +15,6 @@ export const fetchUpcomingMovies = createAsyncThunk(
 const initialState = {
   upcomingMovies: [],
   totalPages: 10,
-  allMovieGenres: [],
   status: null,
   error: null
 };

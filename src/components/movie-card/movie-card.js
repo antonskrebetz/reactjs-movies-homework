@@ -21,7 +21,7 @@ export default function MovieCard({id, vote, title, alt, poster, genres}) {
             {title}
           </Typography>
           <Typography variant="body2" color="#777">
-            {genres.join(', ')}
+            {genres.join(' ')}
           </Typography>
         </CardContent>
       </CardActionArea>

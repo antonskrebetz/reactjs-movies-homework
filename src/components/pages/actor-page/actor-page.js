@@ -4,6 +4,7 @@ import ErrorBoundary from '../../error-boundary/error-boundary';
 import {img_300, notfound_300} from '../../../services/media-service';
 import { Container } from '@mui/material';
 import './actor-page.scss';
+import { SpinnerCircularFixed } from 'spinners-react';
 import avatar from './actor-avatar.jpg'
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -46,7 +47,7 @@ const ActorPage = () => {
           </div>
           <div className="actor-blocktitle">{lang === 'en' ? 'Photos:' : 'Фотографии:'}</div>
           <div className="actor-photos">
-            {imagesStatus === 'loading' && <div className="loading">Loading...</div>}
+            {imagesStatus === 'loading' && <SpinnerCircularFixed style={{display: 'block', margin: '40px auto'}}/>}
             {viewActorImages}
           </div>
         </div>
@@ -56,7 +57,7 @@ const ActorPage = () => {
           <div className="actor-known">
             {lang === 'en' ? 'Known by' : 'Роли в фильмах:'}
           </div>
-          {moviesStatus === 'loading' && <div className="loading">Loading...</div>}
+          {moviesStatus === 'loading' && <SpinnerCircularFixed style={{display: 'block', margin: '40px auto'}}/>}
           <MovieList data={movies.slice(0, 10)}/>
         </ErrorBoundary>
       </div>

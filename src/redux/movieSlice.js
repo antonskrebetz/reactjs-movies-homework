@@ -1,13 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { useHttp } from '../services/http.hook';
+import { httpService } from '../services/http-service';
 
+const {request} = httpService();
 const _apiBase = 'https://api.themoviedb.org/3/';
 const _apiKey = 'api_key=a60262500ac52b0699a0d49e7f802ffa';
 
 export const fetchMovie = createAsyncThunk(
   'movie/fetchMovie',
   ({id, lang}) => {
-    const {request} = useHttp();
     return request(`${_apiBase}movie/${id}?${_apiKey}&language=${lang}`);
   }
 );
@@ -15,7 +15,6 @@ export const fetchMovie = createAsyncThunk(
 export const fetchMovieImages = createAsyncThunk(
   'movie/fetchMovieImages',
   ({id}) => {
-    const {request} = useHttp();
     return request(`${_apiBase}movie/${id}/images?${_apiKey}`);
   }
 );
@@ -23,7 +22,6 @@ export const fetchMovieImages = createAsyncThunk(
 export const fetchMovieCast = createAsyncThunk(
   'movie/fetchMovieCast',
   ({id, lang}) => {
-    const {request} = useHttp();
     return request(`${_apiBase}movie/${id}/credits?${_apiKey}&language=${lang}`);
   }
 );
@@ -31,7 +29,6 @@ export const fetchMovieCast = createAsyncThunk(
 export const fetchMovieRecommend = createAsyncThunk(
   'movie/fetchMovieRecommend',
   async ({id, lang}) => {
-    const {request} = useHttp();
     return request(`${_apiBase}movie/${id}/recommendations?${_apiKey}&language=${lang}`);
   }
 );
@@ -45,6 +42,8 @@ const initialState = {
   castStatus: null,
   castError: null,
   movieCast: [],
+  isShortListCast: true,
+  shortListCast: [],
   recommendStatus: null,
   recommendError: null,
   movieRecommend: []
@@ -54,8 +53,8 @@ const movieSlice = createSlice({
   name: 'actor',
   initialState,
   reducers: {
-    movieChangePages(state, action) {
-      state.page = action.payload.value
+    toggleCastList(state) {
+      state.isShortListCast = !state.isShortListCast
     },
   },
   extraReducers: {
@@ -90,6 +89,7 @@ const movieSlice = createSlice({
     [fetchMovieCast.fulfilled]: (state, action) => {
       state.castStatus = 'resolved';
       state.movieCast = action.payload.cast;
+      state.shortListCast = action.payload.cast.slice(0, 6);
     },
     [fetchMovieCast.rejected]: (state, action) => {
       state.castStatus = 'rejected';
@@ -112,4 +112,4 @@ const movieSlice = createSlice({
 
 const {actions, reducer} = movieSlice;
 export default reducer;
-export const {movieChangePages} = actions;
+export const {toggleCastList} = actions;

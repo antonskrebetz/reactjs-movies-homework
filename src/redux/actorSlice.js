@@ -1,13 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { useHttp } from '../services/http.hook';
+import { httpService } from '../services/http-service';
 
+const {request} = httpService();
 const _apiBase = 'https://api.themoviedb.org/3/';
 const _apiKey = 'api_key=a60262500ac52b0699a0d49e7f802ffa';
 
 export const fetchPerson = createAsyncThunk(
   'actor/fetchPerson',
   ({id, lang}) => {
-    const {request} = useHttp();
     return request(`${_apiBase}person/${id}?${_apiKey}&language=${lang}`);
   }
 );
@@ -15,15 +15,13 @@ export const fetchPerson = createAsyncThunk(
 export const fetchActorImages = createAsyncThunk(
   'actor/fetchActorImages',
   ({id}) => {
-    const {request} = useHttp();
     return request(`${_apiBase}person/${id}/images?${_apiKey}`);
   }
 );
 
 export const fetchActorMovies = createAsyncThunk(
   'actor/fetchActorMovies',
-  async ({id, lang}) => {
-    const {request} = useHttp();
+  ({id, lang}) => {
     return request(`${_apiBase}person/${id}/movie_credits?${_apiKey}&language=${lang}`);
   }
 );
