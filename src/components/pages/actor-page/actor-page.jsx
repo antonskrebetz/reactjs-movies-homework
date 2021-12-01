@@ -12,14 +12,14 @@ import './actor-page.scss';
 
 const ActorPage = () => {
 
-  const {lang, imagesStatus, moviesStatus, movies, images} = useActorPage(287);
+  const {imagesStatus, moviesStatus, movies, images} = useActorPage(287);
   const { t } = useTranslation();
 
   const actorImages = images.map(item => {
     return (
       <img key={nanoid()} 
         src={item.file_path ? `${img_300}${item.file_path}` : notfound_300} 
-        alt={2324}
+        alt={'actor'}
       />
     )
   });

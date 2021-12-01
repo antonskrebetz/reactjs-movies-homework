@@ -11,7 +11,7 @@ import poster from './poster.jpg';
 
 const MoviePage = () => {
 
-  const {lang, imagesStatus, castStatus, recommendStatus, isShortListCast, shortListCast, movieCast, movieImages, movieRecommend, togglelCastItems} = useMoviePage(550);
+  const {imagesStatus, castStatus, recommendStatus, isShortListCast, shortListCast, movieCast, movieImages, movieRecommend, togglelCastItems} = useMoviePage(550);
   const { t } = useTranslation();
 
   return (
@@ -55,7 +55,7 @@ const MoviePage = () => {
                 {imagesStatus === 'loading' && <SpinnerCircularFixed style={{display: 'block', margin: '40px auto'}}/>}
                 {
                   movieImages.map((el, i) => 
-                    <img src={el.file_path ? `${img_300}${el.file_path}` : notfound_300} alt={'cadr from movie'} key={i}/>
+                    <img src={el.file_path ? `${img_300}${el.file_path}` : notfound_300} alt={'frame from movie'} key={i}/>
                   )
                 }
               </div>
