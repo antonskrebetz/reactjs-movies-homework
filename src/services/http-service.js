@@ -16,3 +16,6 @@ export const httpService = () => {
 
   return {request};
 }
+
+export const _apiBase = 'https://api.themoviedb.org/3/';
+export const _apiKey = 'api_key=a60262500ac52b0699a0d49e7f802ffa';

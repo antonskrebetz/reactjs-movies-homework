@@ -1,9 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { httpService } from '../services/http-service';
+import { httpService, _apiBase, _apiKey } from '../services/http-service';
 
 const {request} = httpService();
-const _apiBase = 'https://api.themoviedb.org/3/';
-const _apiKey = 'api_key=a60262500ac52b0699a0d49e7f802ffa';
 
 export const fetchPerson = createAsyncThunk(
   'actor/fetchPerson',
@@ -60,7 +58,7 @@ const actorSlice = createSlice({
     },
     [fetchActorImages.fulfilled]: (state, action) => {
       state.imagesStatus = 'resolved';
-      state.actorImages = action.payload.profiles;
+      state.actorImages = action.payload.profiles.slice(0, 4);
     },
     [fetchActorImages.rejected]: (state, action) => {
       state.imagesStatus = 'rejected';

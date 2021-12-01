@@ -10,7 +10,6 @@ export default class ErrorBoundary extends Component {
     this.setState({
       error: true
     })
-    console.log(error, errorInfo);
   }
 
   render() {

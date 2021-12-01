@@ -1,8 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { httpService } from '../services/http-service';
-
-const _apiBase = 'https://api.themoviedb.org/3/';
-const _apiKey = 'api_key=a60262500ac52b0699a0d49e7f802ffa';
+import { httpService, _apiBase, _apiKey } from '../services/http-service';
 
 export const fetchTopMovies = createAsyncThunk(
   'top/fetchTopMovies',

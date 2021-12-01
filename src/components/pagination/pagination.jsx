@@ -1,12 +1,13 @@
 import DarkTheme from '../mui-theme/dark-theme';
+import { useCallback } from 'react';
 import { Pagination, ThemeProvider } from '@mui/material';
 
 const BasicPagination = ({setPage, countPages = 10}) => {
 
-  const handlePageChange = (page) => {
+  const handlePageChange = useCallback((page) => {
     setPage(page);
     window.scroll(0, 0);
-  };
+  }, [setPage]);
 
   return (
     <ThemeProvider theme={DarkTheme}>

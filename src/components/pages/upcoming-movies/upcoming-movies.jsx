@@ -4,22 +4,11 @@ import MovieList from '../../movie-list/movie-list';
 import ErrorBoundary from '../../error-boundary/error-boundary';
 import { SpinnerCircularFixed } from 'spinners-react';
 import { Container } from '@mui/material';
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchTopMovies } from '../../../redux/topMoviesSlice';
+import { useUpcomingMovies } from './use-upcoming-movies';
 
-const TopRatedMovies = () => {
-  const dispatch = useDispatch();
-  const [page, setPage] = useState(1);
-  const lang = useSelector(state => state.appReducer.lang);
-  const { status } = useSelector(state => state.topReducer)
-  const movies = useSelector(state => state.topReducer.topMovies);
-  const totalPages = useSelector(state => state.topReducer.totalPages);
+const UpcomingMovies = () => {
 
-
-  useEffect(() => {
-    dispatch(fetchTopMovies({lang, page}))
-  }, [dispatch, lang, page]);
+  const {setPage, status, totalPages, movies} = useUpcomingMovies(1);
 
   return (
     <Container maxWidth="xl">
@@ -33,4 +22,4 @@ const TopRatedMovies = () => {
   )
 }
 
-export default TopRatedMovies;
+export default UpcomingMovies;

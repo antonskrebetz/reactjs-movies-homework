@@ -1,31 +1,26 @@
-
 import MovieList from '../../movie-list/movie-list';
 import ErrorBoundary from '../../error-boundary/error-boundary';
 import {img_300, notfound_300} from '../../../services/media-service';
 import { Container } from '@mui/material';
-import './actor-page.scss';
 import { SpinnerCircularFixed } from 'spinners-react';
-import avatar from './actor-avatar.jpg'
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
-import { fetchPerson, fetchActorImages, fetchActorMovies } from '../../../redux/actorSlice';
+import { useActorPage } from './use-actor-page';
+import { useTranslation } from 'react-i18next';
+import avatar from './actor-avatar.jpg';
+import './actor-page.scss';
+
 
 const ActorPage = () => {
-  const dispatch = useDispatch();
-  const lang = useSelector(state => state.appReducer.lang);
-  const {imagesStatus, moviesStatus} = useSelector(state => state.actorReducer)
-  const movies = useSelector(state => state.actorReducer.actorMovies);
-  const images = useSelector(state => state.actorReducer.actorImages);
 
-  useEffect(() => {
-    dispatch(fetchActorImages({id: 287}));
-    dispatch(fetchActorMovies({id: 287, lang}));
-  }, [dispatch, lang]);
+  const {lang, imagesStatus, moviesStatus, movies, images} = useActorPage(287);
+  const { t } = useTranslation();
 
-  const viewActorImages = images.slice(0, 4).map((item, i) => {
+  const actorImages = images.map(item => {
     return (
-      <img key={nanoid()} src={item.file_path ? `${img_300}${item.file_path}` : notfound_300} alt={2324}/>
+      <img key={nanoid()} 
+        src={item.file_path ? `${img_300}${item.file_path}` : notfound_300} 
+        alt={2324}
+      />
     )
   });
 
@@ -37,26 +32,24 @@ const ActorPage = () => {
         </div>
         <div className="actor-info">
           <h1 className="actor-name">Actor Name</h1>
-          <div className="actor-blocktitle">{lang === 'en' ? 'Birthday:' : 'Дата рождения:'}</div>
+          <div className="actor-blocktitle">{t('actor.birth')}</div>
           <div className="actor-birth">1959-04-15</div>
-          <div className="actor-blocktitle">{lang === 'en' ? 'Place of birth:' : 'Место рождения:'}</div>
+          <div className="actor-blocktitle">{t('actor.place')}</div>
           <div className="actor-birthplace">Los Angeles, California</div>
-          <div className="actor-blocktitle">{lang === 'en' ? 'Biography:' : 'Биография:'}</div>
+          <div className="actor-blocktitle">{t('actor.bio')}</div>
           <div className="actor-biography">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque quas impedit at, perferendis unde, sequi recusandae odio quod accusantium, quisquam eveniet ducimus rerum deleniti! Asperiores quia possimus exercitationem nulla? Blanditiis?Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iusto deleniti voluptates saepe libero adipisci cumque totam, qui provident a necessitatibus ipsam quia illum minima eius dolorum quibusdam quod, magni tenetur?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis reprehenderit facilis excepturi rerum quod voluptate placeat repudiandae non optio? Illum libero quos magni pariatur necessitatibus similique alias modi laborum quasi. Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat laboriosam ducimus cum consequuntur pariatur, optio dolorem ex alias dolorum enim, delectus officia voluptate. Veritatis, consequatur numquam ipsum quae dolore voluptatum?
           </div>
-          <div className="actor-blocktitle">{lang === 'en' ? 'Photos:' : 'Фотографии:'}</div>
+          <div className="actor-blocktitle">{t('actor.photos')}</div>
           <div className="actor-photos">
             {imagesStatus === 'loading' && <SpinnerCircularFixed style={{display: 'block', margin: '40px auto'}}/>}
-            {viewActorImages}
+            {actorImages}
           </div>
         </div>
       </div>
       <div className="actor-works">
         <ErrorBoundary>
-          <div className="actor-known">
-            {lang === 'en' ? 'Known by' : 'Роли в фильмах:'}
-          </div>
+          <div className="actor-known">{t('actor.known')}</div>
           {moviesStatus === 'loading' && <SpinnerCircularFixed style={{display: 'block', margin: '40px auto'}}/>}
           <MovieList data={movies.slice(0, 10)}/>
         </ErrorBoundary>

@@ -1,12 +1,20 @@
 import { Card, CardContent, CardMedia, Typography, CardActionArea, Chip } from "@mui/material";
 import { img_300, notfound_300 } from "../../services/media-service";
+import { useMemo } from "react";
 
 export default function MovieCard({id, vote, title, alt, poster, genres}) {
+
+  const movieRate = useMemo(() => {
+    if (vote >= 7) return 'success';
+    if (vote > 4) return 'warning';
+    return 'error';
+  }, [vote])
+
   return (
     <Card sx={{width: 270, marginBottom: 4,position: 'relative', backgroundColor: '#151515'}} key={id}>
       <Chip 
         label={vote.toFixed(1)} 
-        color={vote >= 7 ? 'success' : vote < 4 ? 'error' : 'warning'}
+        color={movieRate}
         sx={{position: 'absolute', zIndex: 1000, borderRadius: 1}}
       />
       <CardActionArea>
