@@ -12,11 +12,11 @@ const App = () => {
     <>
       <Header />
       <PopularMovies />
-      {/* <TopRatedMovies /> */}
-      {/* <UpcomingMovies /> */}
-      {/* <SearchPage /> */}
-      {/* <ActorPage /> */}
-      {/* <MoviePage /> */}
+      <TopRatedMovies />
+      <UpcomingMovies />
+      <SearchPage />
+      <ActorPage />
+      <MoviePage />
     </>
   )
 }

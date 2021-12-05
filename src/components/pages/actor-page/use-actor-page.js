@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchPerson, fetchActorImages, fetchActorMovies } from '../../../redux/actorSlice';
+import { fetchActorImages, fetchActorMovies } from '../../../redux/actorSlice';
 import { useLang } from "../../../services/use-lang";
 
 export const useActorPage = (id) => {
