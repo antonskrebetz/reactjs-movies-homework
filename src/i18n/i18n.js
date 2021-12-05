@@ -3,9 +3,9 @@ import { initReactI18next } from 'react-i18next';
 
 const translationsEn = {
   inputPlaceholder: 'Movies, person...',
-  pop: 'Popular',
-  top: 'Top rated',
-  up: 'Upcoming',
+  toggleBtnsPopMovies: 'Popular',
+  toggleBtnsTopMovies: 'Top rated',
+  toggleBtnsUpMovies: 'Upcoming',
   searchResl: 'Search results',
   actor: {
     birth: 'Birthday:',
@@ -29,9 +29,9 @@ const translationsEn = {
 }
 const translationsRu = {
   inputPlaceholder: 'Фильмы, актёры...',
-  pop: 'Популярные',
-  top: 'Топовые',
-  up: 'Ожидаемые',
+  toggleBtnsPopMovies: 'Популярные',
+  toggleBtnsTopMovies: 'Топовые',
+  toggleBtnsUpMovies: 'Ожидаемые',
   searchResl: 'Результаты поиска',
   actor: {
     birth: 'Дата рождения:',

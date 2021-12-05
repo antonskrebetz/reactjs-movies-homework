@@ -1,11 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { fetchPopularMovies } from '../../../redux/popularMoviesSlice';
+import { useLang } from "../../../services/use-lang";
 
 export const usePopularMovies = (initialPage) => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(initialPage);
-  const lang = useSelector(state => state.appReducer.lang);
+  const {lang} = useLang();
   const {status} = useSelector(state => state.popularReducer);
   const totalPages = useSelector(state => state.popularReducer.totalPages);
   const movies = useSelector(state => state.popularReducer.popularMovies);

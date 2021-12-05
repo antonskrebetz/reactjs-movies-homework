@@ -22,9 +22,9 @@ const ToggleButtons = () => {
         exclusive
         onChange={handleChange}
       >
-        <ToggleButton value="popular">{t('pop')}</ToggleButton>
-        <ToggleButton value="top">{t('top')}</ToggleButton>
-        <ToggleButton value="upcoming">{t('up')}</ToggleButton>
+        <ToggleButton value="popular">{t('toggleBtnsPopMovies')}</ToggleButton>
+        <ToggleButton value="top">{t('toggleBtnsTopMovies')}</ToggleButton>
+        <ToggleButton value="upcoming">{t('toggleBtnsUpMovies')}</ToggleButton>
       </ToggleButtonGroup>
     </ThemeProvider>
   );

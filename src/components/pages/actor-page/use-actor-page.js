@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPerson, fetchActorImages, fetchActorMovies } from '../../../redux/actorSlice';
+import { useLang } from "../../../services/use-lang";
 
 export const useActorPage = (id) => {
   const dispatch = useDispatch();
-  const lang = useSelector(state => state.appReducer.lang);
+  const {lang} = useLang();
   const {imagesStatus, moviesStatus} = useSelector(state => state.actorReducer)
   const movies = useSelector(state => state.actorReducer.actorMovies);
   const images = useSelector(state => state.actorReducer.actorImages);
