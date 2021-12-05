@@ -7,4 +7,9 @@
   @media (max-width: 610px) {
     justify-content: center; 
   }
+
+  &::after {
+    content: '';
+    width: 270px;
+  }
 }

@@ -35,6 +35,10 @@
     font-size: 14px;
   }
 
+  &-blocktitle:first-child {
+    margin-top: 0;
+  }
+
   &-genres {
     margin-top: 30px;
     margin-right: 20px;
@@ -76,17 +80,23 @@
 
     &_list {
       display: flex;
-      flex-wrap: wrap; 
+      flex-wrap: wrap;
+      justify-content: space-between; 
+      gap: 20px;
 
       @media (max-width: 605px) {
         justify-content: center; 
       }
 
+      &::after {
+        content: '';
+        width: 250px;
+        flex: auto;
+      }
+
       & img {
-        margin-right: 20px;
-        margin-bottom: 20px;
         height: auto;
-        max-width: 250px;
+        width: 250px;
         border-radius: 6px;
 
         @media (max-width: 605px) {

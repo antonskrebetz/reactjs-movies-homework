@@ -1,13 +1,19 @@
 import { render, screen } from '@testing-library/react';
+import {Provider} from 'react-redux';
+import store from '../../redux/store';
 import ToggleButtons from './toggle-buttons';
 
 describe('Test ToggleButtons component', () => {
   beforeEach(() => {
-    render(<ToggleButtons/>);
+    render(
+      <Provider store={store}>
+        <ToggleButtons/>
+      </Provider>
+    );
   })
 
-  test('have button', () => {
-    const img = screen.getByText(/popular/i);
-    expect(img).toBeInTheDocument();
+  test('has a popular button', () => {
+    const btn = screen.getByText(/popular/i);
+    expect(btn).toBeDefined();
   });
 });
