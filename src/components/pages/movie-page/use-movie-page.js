@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchMovieImages, fetchMovieCast, fetchMovieRecommend, toggleCastList } from '../../../redux/movieSlice';
+import { fetchMovie, fetchMovieImages, fetchMovieCast, fetchMovieRecommend, toggleCastList } from '../../../redux/movieSlice';
 import { useLang } from '../../../services/use-lang';
 
 export const useMoviePage = (id) => {
   const dispatch = useDispatch();
   const {lang} = useLang();
-  const {imagesStatus, castStatus, recommendStatus} = useSelector(state => state.movieReducer);
+  const {movieStatus, imagesStatus, castStatus, recommendStatus} = useSelector(state => state.movieReducer);
+  const movieData = useSelector(state => state.movieReducer.movieData);
   const isShortListCast = useSelector(state => state.movieReducer.isShortListCast);
   const shortListCast = useSelector(state => state.movieReducer.shortListCast);
   const movieCast = useSelector(state => state.movieReducer.movieCast);
@@ -14,14 +15,15 @@ export const useMoviePage = (id) => {
   const movieRecommend = useSelector(state => state.movieReducer.movieRecommend);
 
   useEffect(() => {
+    dispatch(fetchMovie({id, lang}));
     dispatch(fetchMovieImages({id}));
     dispatch(fetchMovieCast({id, lang}));
     dispatch(fetchMovieRecommend({id, lang}));
-  }, [id, dispatch, lang]);
+  }, [dispatch, id, lang]);
 
   const togglelCastItems = () => {
     dispatch(toggleCastList());
   }
 
-  return {lang, imagesStatus, castStatus, recommendStatus, isShortListCast, shortListCast, movieCast, movieImages, movieRecommend, togglelCastItems};
+  return {movieStatus, imagesStatus, castStatus, recommendStatus, movieData,isShortListCast, shortListCast, movieCast, movieImages, movieRecommend, togglelCastItems};
 }

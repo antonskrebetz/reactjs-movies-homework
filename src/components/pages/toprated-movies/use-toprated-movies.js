@@ -12,7 +12,8 @@ export const useTopratedMovies = (initialPage) => {
   const totalPages = useSelector(state => state.topReducer.totalPages);
 
   useEffect(() => {
-    dispatch(fetchTopMovies({lang, page}))
+    dispatch(
+      fetchTopMovies({lang, page}))
   }, [dispatch, lang, page]);
 
   return {setPage, status, movies, totalPages};

@@ -10,6 +10,7 @@
   }
 
   &-avatar {
+    margin-bottom: 30px;
     margin-right: 30px;
 
     @media (max-width: 610px) {
@@ -27,6 +28,10 @@
         max-width: 260px;
       }
     }
+  }
+
+  &-info {
+    flex-grow: 1;
   }
 
   &-blocktitle {

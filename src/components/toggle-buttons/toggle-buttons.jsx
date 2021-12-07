@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import { Link } from "react-router-dom";
 import { ThemeProvider, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import DarkTheme from '../mui-theme/dark-theme';
 import { useTranslation } from 'react-i18next';
@@ -22,9 +23,9 @@ const ToggleButtons = () => {
         exclusive
         onChange={handleChange}
       >
-        <ToggleButton value="popular">{t('toggleBtnsPopMovies')}</ToggleButton>
-        <ToggleButton value="top">{t('toggleBtnsTopMovies')}</ToggleButton>
-        <ToggleButton value="upcoming">{t('toggleBtnsUpMovies')}</ToggleButton>
+        <ToggleButton value="popular" component={Link} to="/">{t('toggleBtnsPopMovies')}</ToggleButton>
+        <ToggleButton value="top" component={Link} to="/toprated">{t('toggleBtnsTopMovies')}</ToggleButton>
+        <ToggleButton value="upcoming" component={Link} to="/upcoming">{t('toggleBtnsUpMovies')}</ToggleButton>
       </ToggleButtonGroup>
     </ThemeProvider>
   );

@@ -1,6 +1,7 @@
+import { Link } from 'react-router-dom';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
-import { Container, InputBase, Typography, Toolbar, Box, AppBar, Select, MenuItem, FormControl, ThemeProvider } from '@mui/material';
+import { Container, InputBase, Toolbar, Box, AppBar, Select, MenuItem, FormControl, ThemeProvider } from '@mui/material';
 import DarkTheme from '../mui-theme/dark-theme';
 import { useHeader } from './use-header';
 import { useTranslation } from 'react-i18next';
@@ -57,15 +58,11 @@ const Header = () => {
       <AppBar position="static" sx={{background: '#202020'}}>
         <Container maxWidth="xl">
           <Toolbar>
-            <Typography
-              variant="h5"
-              noWrap
-              component="div"
-              sx={{ flexGrow: 1, textTransform: 'uppercase' }}
-            >
-              movie app
-            </Typography>
-            <Search sx={{ display: { xs: 'flex'} }}>
+            <Link to="/" className="header-logo">
+                movie app
+            </Link>
+            <Box sx={{flexGrow: 1}} />
+            <Search sx={{ marginLeft: '10px', display: { xs: 'flex'}}}>
               <SearchIconWrapper>
                 <SearchIcon/>
               </SearchIconWrapper>

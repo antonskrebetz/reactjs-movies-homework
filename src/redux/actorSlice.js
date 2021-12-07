@@ -27,6 +27,7 @@ export const fetchActorMovies = createAsyncThunk(
 const initialState = {
   personStatus: null,
   personError: null,
+  personData: {},
   imagesStatus: null,
   imagesError: null,
   actorImages: [],
@@ -46,7 +47,7 @@ const actorSlice = createSlice({
     },
     [fetchPerson.fulfilled]: (state, action) => {
       state.personStatus = 'resolved';
-      state.searchMovies = action.payload.results;
+      state.personData = action.payload;
     },
     [fetchPerson.rejected]: (state, action) => {
       state.personStatus = 'rejected';

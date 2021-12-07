@@ -2,7 +2,7 @@ import MovieCard from '../movie-card/movie-card';
 import './movie-list.scss';
 import { useSelector } from 'react-redux';
 
-const MovieList = ({data, genres}) => {
+const MovieList = ({data}) => {
   const movieGenres = useSelector(state => state.appReducer.movieGenres);
   
   return (

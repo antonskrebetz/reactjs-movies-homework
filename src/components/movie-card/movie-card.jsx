@@ -1,6 +1,7 @@
 import { Card, CardContent, CardMedia, Typography, CardActionArea, Chip } from "@mui/material";
 import { img_300, notfound_300 } from "../../services/media-service";
 import { useMemo } from "react";
+import { Link } from "react-router-dom";
 
 export default function MovieCard({id, vote, title, alt, poster, genres}) {
 
@@ -10,8 +11,12 @@ export default function MovieCard({id, vote, title, alt, poster, genres}) {
     return 'error';
   }, [vote])
 
+  const clickOnMovieCard = () => {
+    window.scroll(0, 0);
+  }
+
   return (
-    <Card sx={{width: 270, marginBottom: 4,position: 'relative', backgroundColor: '#151515'}} key={id}>
+    <Card sx={{width: 270, marginBottom: 4,position: 'relative', backgroundColor: '#151515'}} key={id} component={Link} to={`/movie/${id}`} onClick={clickOnMovieCard}>
       <Chip 
         label={vote.toFixed(1)} 
         color={movieRate}
