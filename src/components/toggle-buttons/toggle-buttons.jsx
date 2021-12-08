@@ -7,9 +7,8 @@ import { useLocation } from 'react-router';
 
 const ToggleButtons = () => {
   const url = useLocation();
-  const currentSection = url.pathname.match(/\w\D/g).join('');
   const { t } = useTranslation();
-  const [alignment, setAlignment] = useState(currentSection);
+  const [alignment, setAlignment] = useState(url.pathname);
 
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
@@ -26,9 +25,9 @@ const ToggleButtons = () => {
         exclusive
         onChange={handleChange}
       >
-        <ToggleButton value="popular" component={Link} to="/">{t('toggleBtnsPopMovies')}</ToggleButton>
-        <ToggleButton value="toprated" component={Link} to="/toprated/1">{t('toggleBtnsTopMovies')}</ToggleButton>
-        <ToggleButton value="upcoming" component={Link} to="/upcoming/1">{t('toggleBtnsUpMovies')}</ToggleButton>
+        <ToggleButton value="/" component={Link} to="/">{t('toggleBtnsPopMovies')}</ToggleButton>
+        <ToggleButton value="/toprated" component={Link} to="/toprated">{t('toggleBtnsTopMovies')}</ToggleButton>
+        <ToggleButton value="/upcoming" component={Link} to="/upcoming">{t('toggleBtnsUpMovies')}</ToggleButton>
       </ToggleButtonGroup>
     </ThemeProvider>
   );

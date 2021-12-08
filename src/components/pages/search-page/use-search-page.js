@@ -14,5 +14,5 @@ export const useSearchPage = (query, page) => {
     dispatch(fetchSearchMovies({lang, query, page}))
   }, [dispatch, query, lang, page]);
 
-  return {status, query, totalPages, movies};
+  return {status, totalPages, movies};
 }

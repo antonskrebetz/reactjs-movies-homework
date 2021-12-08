@@ -3,17 +3,18 @@ import MovieList from '../../movie-list/movie-list';
 import ErrorBoundary from '../../error-boundary/error-boundary';
 import Spinner from '../../spinner/spinner';
 import { usePopularMovies } from './use-popular-movies';
+import useQuery from '../../../services/use-query';
 
 const PopularMovies = () => {
-
-  const {setPage, status, totalPages, movies} = usePopularMovies(1); 
+  let query = useQuery();
+  const { status, totalPages, movies} = usePopularMovies(query.get("page")); 
   return (
     <>
       {status === 'loading' && <Spinner/>}
       <ErrorBoundary>
         <MovieList data={movies}/>
       </ErrorBoundary>
-      <BasicPagination setPage={setPage} countPages={totalPages}/>
+      <BasicPagination actualPage={query.get("page")} countPages={totalPages}/>
     </>
   )
 }
