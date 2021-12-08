@@ -49,7 +49,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const Header = () => {
-
   const {searchText, lang, handleChangeLang, hadleChangeInput, submitSearchForm} = useHeader();
   const { t } = useTranslation();
 

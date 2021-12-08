@@ -3,10 +3,11 @@ import MovieList from '../../movie-list/movie-list';
 import ErrorBoundary from '../../error-boundary/error-boundary';
 import Spinner from '../../spinner/spinner';
 import { useUpcomingMovies } from './use-upcoming-movies';
+import { useParams } from 'react-router-dom';
 
 const UpcomingMovies = () => {
-
-  const {setPage, status, totalPages, movies} = useUpcomingMovies(1);
+  let {moviePage} = useParams();
+  const {status, totalPages, movies} = useUpcomingMovies(moviePage);
 
   return (
     <>
@@ -14,7 +15,7 @@ const UpcomingMovies = () => {
       {status === 'loading' && <Spinner/>}
         <MovieList data={movies}/>
       </ErrorBoundary>
-      <BasicPagination setPage={setPage} countPages={totalPages}/>
+      <BasicPagination countPages={totalPages}/>
     </>
   )
 }

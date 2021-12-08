@@ -3,10 +3,13 @@ import { Link } from "react-router-dom";
 import { ThemeProvider, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import DarkTheme from '../mui-theme/dark-theme';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router';
 
 const ToggleButtons = () => {
+  const url = useLocation();
+  const currentSection = url.pathname.match(/\w\D/g).join('');
   const { t } = useTranslation();
-  const [alignment, setAlignment] = useState('popular');
+  const [alignment, setAlignment] = useState(currentSection);
 
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
@@ -24,8 +27,8 @@ const ToggleButtons = () => {
         onChange={handleChange}
       >
         <ToggleButton value="popular" component={Link} to="/">{t('toggleBtnsPopMovies')}</ToggleButton>
-        <ToggleButton value="top" component={Link} to="/toprated">{t('toggleBtnsTopMovies')}</ToggleButton>
-        <ToggleButton value="upcoming" component={Link} to="/upcoming">{t('toggleBtnsUpMovies')}</ToggleButton>
+        <ToggleButton value="toprated" component={Link} to="/toprated/1">{t('toggleBtnsTopMovies')}</ToggleButton>
+        <ToggleButton value="upcoming" component={Link} to="/upcoming/1">{t('toggleBtnsUpMovies')}</ToggleButton>
       </ToggleButtonGroup>
     </ThemeProvider>
   );

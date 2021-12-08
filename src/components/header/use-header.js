@@ -24,7 +24,7 @@ export const useHeader = () => {
   const submitSearchForm = (e) => {
     if (e.key === 'Enter') {
       dispatch(changeSearchText({text: searchText}));
-      navigate(`/search/${searchText}`);
+      navigate(`/search/${searchText}/1`);
       setSearchText('');
     }
   }

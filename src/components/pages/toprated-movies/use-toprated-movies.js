@@ -1,13 +1,12 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchTopMovies } from '../../../redux/topMoviesSlice';
 import { useLang } from "../../../services/use-lang";
 
-export const useTopratedMovies = (initialPage) => {
+export const useTopratedMovies = (page) => {
   const dispatch = useDispatch();
-  const [page, setPage] = useState(initialPage);
   const {lang} = useLang();
-  const { status } = useSelector(state => state.topReducer)
+  const {status} = useSelector(state => state.topReducer)
   const movies = useSelector(state => state.topReducer.topMovies);
   const totalPages = useSelector(state => state.topReducer.totalPages);
 
@@ -16,5 +15,5 @@ export const useTopratedMovies = (initialPage) => {
       fetchTopMovies({lang, page}))
   }, [dispatch, lang, page]);
 
-  return {setPage, status, movies, totalPages};
+  return {status, movies, totalPages};
 }

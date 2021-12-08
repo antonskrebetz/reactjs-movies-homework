@@ -4,11 +4,12 @@ import ErrorBoundary from '../../error-boundary/error-boundary';
 import Spinner from '../../spinner/spinner';
 import { useSearchPage } from './use-search-page';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 import './search-page.scss';
 
 const SearchPage = () => {
-
-  const {setPage, status, query, totalPages, movies} = useSearchPage(1);
+  let {searchId, moviePage} = useParams();
+  const {status, query, totalPages, movies} = useSearchPage(searchId, moviePage);
   const { t } = useTranslation();
   
   return (
@@ -20,7 +21,7 @@ const SearchPage = () => {
         {status === 'loading' && <Spinner/>}
         <MovieList data={movies}/>
       </ErrorBoundary>
-      <BasicPagination setPage={setPage} countPages={totalPages}/>
+      <BasicPagination countPages={totalPages}/>
     </>
   )
 }

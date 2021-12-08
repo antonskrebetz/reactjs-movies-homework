@@ -19,12 +19,12 @@ const App = () => {
         <Container maxWidth="xl">
           <Routes>
             <Route path="/" element={[<ToggleButtons key={'toggle'}/>, <PopularMovies key={12345}/>]} />
-            <Route path="/toprated" element={[<ToggleButtons key={'toggle'}/>, <TopRatedMovies key={45465}/>]} />
-            <Route path="/upcoming" element={[<ToggleButtons key={'toggle'}/>,<UpcomingMovies key={1237699845}/>]} />
-            <Route path="search/:searchId" element={[<ToggleButtons key={'toggle'}/>,<SearchPage key={343565}/>]} />
+            <Route path="/toprated/:moviePage" element={[<ToggleButtons key={'toggle'}/>, <TopRatedMovies key={45465}/>]} />
+            <Route path="/upcoming/:moviePage" element={[<ToggleButtons key={'toggle'}/>,<UpcomingMovies key={12376}/>]} />
+            <Route path="search/:searchId/:moviePage" element={<SearchPage/>} />
             <Route path="actor/:actorId" element={<ActorPage/>} />
             <Route path="movie/:movieId" element={<MoviePage/>} />
-            <Route path="*" element={<Page404/>}/>
+            <Route path="*" element={<Page404/>} />
           </Routes>
         </Container>
       </Router>

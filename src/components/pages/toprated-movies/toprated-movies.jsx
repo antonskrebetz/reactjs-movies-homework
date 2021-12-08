@@ -3,10 +3,11 @@ import MovieList from '../../movie-list/movie-list';
 import ErrorBoundary from '../../error-boundary/error-boundary';
 import Spinner from '../../spinner/spinner';
 import { useTopratedMovies } from './use-toprated-movies';
+import { useParams } from 'react-router-dom';
 
 const TopRatedMovies = () => {
-  
-  const { setPage, status, movies, totalPages } = useTopratedMovies(1);
+  let {moviePage} = useParams();
+  const { status, movies, totalPages } = useTopratedMovies(moviePage);
 
   return (
     <>
@@ -14,7 +15,7 @@ const TopRatedMovies = () => {
       {status === 'loading' && <Spinner/>}
         <MovieList data={movies}/>
       </ErrorBoundary>
-      <BasicPagination setPage={setPage} countPages={totalPages}/>
+      <BasicPagination countPages={totalPages}/>
     </>
   )
 }

@@ -13,6 +13,7 @@ const MoviePage = () => {
 
   const {movieId} = useParams();
   const {movieStatus, imagesStatus, castStatus, recommendStatus, movieData, isShortListCast, shortListCast, movieCast, movieImages, movieRecommend, togglelCastItems} = useMoviePage(movieId);
+  const movieDuration = Math.floor(movieData.runtime / 60) + ':' + (movieData.runtime % 60);
   const { t } = useTranslation();
 
   const PageContent = () => {
@@ -32,7 +33,7 @@ const MoviePage = () => {
             <div className="movie-blocktitle">{t('movie.revenue')}</div>
             <div className="movie-revenue">{movieData.budget}</div>
             <div className="movie-blocktitle">{t('movie.duration')}</div>
-            <div className="movie-duration">{movieData.runtime}</div>
+            <div className="movie-duration">{movieDuration}</div>
             <div className="movie-genres">
               {movieData.genres.map(genre => <div key={genre.id}>{genre.name}</div>)}
             </div>
