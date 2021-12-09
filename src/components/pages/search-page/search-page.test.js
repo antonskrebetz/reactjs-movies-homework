@@ -1,13 +1,16 @@
 import { render, screen } from '@testing-library/react';
 import {Provider} from 'react-redux';
+import { BrowserRouter as Router} from "react-router-dom";
 import store from '../../../redux/store';
 import SearchPage from './search-page';
 
 describe('Test SearchPage component', () => {
   beforeEach(() => {
     render(
-      <Provider store={store}>  
-        <SearchPage/>
+      <Provider store={store}>
+        <Router>
+          <SearchPage/>
+        </Router>  
       </Provider>
     );
   })

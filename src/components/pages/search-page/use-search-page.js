@@ -9,10 +9,11 @@ export const useSearchPage = (query, page) => {
   const { status } = useSelector(state => state.searchReducer);
   const movies = useSelector(state => state.searchReducer.searchMovies);
   const totalPages = useSelector(state => state.searchReducer.totalPages);
+  const genresStatus = useSelector(state => state.appReducer.genresStatus);
 
   useEffect(() => {
     dispatch(fetchSearchMovies({lang, query, page}))
   }, [dispatch, query, lang, page]);
 
-  return {status, totalPages, movies};
+  return {status, totalPages, movies, genresStatus};
 }

@@ -9,10 +9,11 @@ export const usePopularMovies = (page) => {
   const {status} = useSelector(state => state.popularReducer);
   const totalPages = useSelector(state => state.popularReducer.totalPages);
   const movies = useSelector(state => state.popularReducer.popularMovies);
+  const genresStatus = useSelector(state => state.appReducer.genresStatus);
 
   useEffect(() => {
     dispatch(fetchPopularMovies({lang, page}));
   }, [dispatch, page, lang]);
 
-  return {status, totalPages, movies};
+  return {status, totalPages, movies, genresStatus};
 }

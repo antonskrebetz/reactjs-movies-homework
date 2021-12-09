@@ -7,12 +7,12 @@ import useQuery from '../../../services/use-query';
 
 const PopularMovies = () => {
   let query = useQuery();
-  const { status, totalPages, movies} = usePopularMovies(query.get("page")); 
+  const { status, totalPages, movies, genresStatus } = usePopularMovies(query.get("page")); 
   return (
     <>
       {status === 'loading' && <Spinner/>}
       <ErrorBoundary>
-        <MovieList data={movies}/>
+        {genresStatus === 'loading' ? <Spinner/> : <MovieList data={movies}/>}
       </ErrorBoundary>
       <BasicPagination actualPage={query.get("page")} countPages={totalPages}/>
     </>

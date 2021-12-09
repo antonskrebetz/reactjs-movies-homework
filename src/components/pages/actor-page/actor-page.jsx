@@ -32,7 +32,7 @@ const ActorPage = () => {
             <img src={`${img_300}${personData.profile_path}`} alt="actor avatar" />
           </div>
           <div className="actor-info">
-            <h1 className="actor-name">{personData.name}</h1>
+            <h1 className="actor-name" title="actor-name">{personData.name}</h1>
             <div className="actor-blocktitle">{t('actor.birth')}</div>
             <div className="actor-birth">{personData.birthday}</div>
             <div className="actor-blocktitle">{t('actor.place')}</div>

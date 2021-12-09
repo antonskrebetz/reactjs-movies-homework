@@ -9,11 +9,12 @@ export const useTopratedMovies = (page) => {
   const {status} = useSelector(state => state.topReducer)
   const movies = useSelector(state => state.topReducer.topMovies);
   const totalPages = useSelector(state => state.topReducer.totalPages);
+  const genresStatus = useSelector(state => state.appReducer.genresStatus);
 
   useEffect(() => {
     dispatch(
       fetchTopMovies({lang, page}))
   }, [dispatch, lang, page]);
 
-  return {status, movies, totalPages};
+  return {status, movies, totalPages, genresStatus};
 }

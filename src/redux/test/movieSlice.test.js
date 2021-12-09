@@ -104,12 +104,12 @@ describe('MovieSlice reducer', () => {
     });
 
     test('sets the recommendStatus resolved and add array of results in movieRecommend when fetchMovieRecommend is fulfilled', () => {
-      const action = { type: fetchMovieRecommend.fulfilled.type, payload: { page: 1, results: [{'id': 819}, {'id': 812}, {'id': 123}, {'id': 546}, {'id': 55}, {'id': 3}]} };
+      const action = { type: fetchMovieRecommend.fulfilled.type, payload: { page: 1, results: [{'id': 819}, {'id': 812}, {'id': 123}, {'id': 546}, {'id': 55}, {'id': 3}, {'id': 7}]} };
       const state = reducer(initialState, action);
       expect(state).toEqual({
         recommendStatus: 'resolved',
         recommendError: null,
-        movieRecommend: [{'id': 819}, {'id': 812}, {'id': 123}, {'id': 546}, {'id': 55}, {'id': 3}]
+        movieRecommend: [{'id': 819}, {'id': 812}, {'id': 123}, {'id': 546}, {'id': 55}]
       });
     });
 

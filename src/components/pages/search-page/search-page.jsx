@@ -12,17 +12,17 @@ const SearchPage = () => {
   let queryText = queryState.get("query");
   let queryPage = queryState.get("page");
 
-  const {status, totalPages, movies} = useSearchPage(queryText, queryPage);
+  const {status, totalPages, movies, genresStatus} = useSearchPage(queryText, queryPage);
   const { t } = useTranslation();
   
   return (
     <>
+      <h2 className="search-results">
+        {movies.length ? `${t('searchResl')}: «${queryText}»` : `NO RESULTS FOUND: «${queryText}»`}
+      </h2>
+      {status === 'loading' && <Spinner/>}
       <ErrorBoundary>
-        <h2 className="search-results">
-          {movies.length ? `${t('searchResl')}: «${queryText}»` : `NO RESULTS FOUND: «${queryText}»`}
-        </h2>
-        {status === 'loading' && <Spinner/>}
-        <MovieList data={movies}/>
+        {genresStatus === 'loading' ? <Spinner/> : <MovieList data={movies}/>}
       </ErrorBoundary>
       <BasicPagination actualPage={queryPage} query={queryText} countPages={totalPages}/>
     </>

@@ -9,10 +9,11 @@ export const useUpcomingMovies = (page) => {
   const { status } = useSelector(state => state.upcomingReducer);
   const movies = useSelector(state => state.upcomingReducer.upcomingMovies);
   const totalPages = useSelector(state => state.upcomingReducer.totalPages);
+  const genresStatus = useSelector(state => state.appReducer.genresStatus);
 
   useEffect(() => {
     dispatch(fetchUpcomingMovies({lang, page}))
   }, [dispatch, lang, page]);
 
-  return {status, totalPages, movies};
+  return {status, totalPages, movies, genresStatus};
 }
