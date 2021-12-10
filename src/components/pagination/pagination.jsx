@@ -2,6 +2,7 @@ import DarkTheme from '../mui-theme/dark-theme';
 import { useCallback } from 'react';
 import { Pagination, ThemeProvider } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
+import styles from './styles';
 
 const BasicPagination = ({actualPage, query, countPages = 10}) => {
   const DEFAULT_PAGE = 1;
@@ -25,7 +26,7 @@ const BasicPagination = ({actualPage, query, countPages = 10}) => {
         color="success"
         hideNextButton
         hidePrevButton
-        sx={{marginBottom: '20px', display: 'flex', justifyContent: 'center'}}
+        sx={styles.pagination}
         onChange={e => handlePageChange(e.target.textContent)}
       />
     </ThemeProvider>

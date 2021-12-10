@@ -4,6 +4,7 @@ import { ThemeProvider, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import DarkTheme from '../mui-theme/dark-theme';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
+import styles from './styles';
 
 const ToggleButtons = () => {
   const url = useLocation();
@@ -18,7 +19,7 @@ const ToggleButtons = () => {
   return (
     <ThemeProvider theme={DarkTheme}>
       <ToggleButtonGroup 
-        sx={{margin: '30px 0', display: 'flex', justifyContent: {xs: 'center', sm: 'end'}}}
+        sx={styles.togglebtns}
         size="small"
         color="success"
         value={alignment}

@@ -1,6 +1,7 @@
 import { Card, CardContent, CardMedia, Typography, CardActionArea } from '@mui/material';
 import {img_300, notfound_300} from '../../services/media-service';
 import { Link } from 'react-router-dom';
+import styles from './styles';
 
 const ActorCard = ({id, image, name, character, alt}) => {
 
@@ -9,7 +10,7 @@ const ActorCard = ({id, image, name, character, alt}) => {
   }
 
   return (
-    <Card component={Link} to={`/actor/${id}`} onClick={clickOnActorCard} sx={{ backgroundColor: '#151515'}}>
+    <Card component={Link} to={`/actor/${id}`} onClick={clickOnActorCard} sx={styles.card}>
       <CardActionArea>
         <CardMedia
           component="img"

@@ -1,8 +1,9 @@
 import { SpinnerCircularFixed } from 'spinners-react';
+import styles from './styles';
 
 const Spinner = () => {
   return (
-    <SpinnerCircularFixed style={{display: 'block', margin: '40px auto'}}/>
+    <SpinnerCircularFixed style={styles.spinner}/>
   )
 };
 
