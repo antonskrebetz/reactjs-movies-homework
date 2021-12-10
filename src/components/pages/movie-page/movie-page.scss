@@ -84,19 +84,15 @@
     }
 
     &_list {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between; 
-      gap: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 250px);
+      justify-content: space-between;
+      align-content: center;
+      grid-gap: 20px;
 
       @media (max-width: 605px) {
+        grid-template-columns: repeat(auto-fill, 300px);
         justify-content: center; 
-      }
-
-      &::after {
-        content: '';
-        width: 250px;
-        flex: auto;
       }
 
       & img {
@@ -106,7 +102,7 @@
 
         @media (max-width: 605px) {
           margin-right: 0;
-          max-width: 300px; 
+          width: 300px; 
         }
       }
     }

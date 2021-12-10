@@ -9,7 +9,7 @@ const ActorCard = ({id, image, name, character, alt}) => {
   }
 
   return (
-    <Card component={Link} to={`/actor/${id}`} onClick={clickOnActorCard} sx={{ backgroundColor: '#151515', marginBottom: 2, width: 150 }}>
+    <Card component={Link} to={`/actor/${id}`} onClick={clickOnActorCard} sx={{ backgroundColor: '#151515'}}>
       <CardActionArea>
         <CardMedia
           component="img"

@@ -16,7 +16,7 @@ export default function MovieCard({id, vote, title, alt, poster, genres}) {
   }
 
   return (
-    <Card sx={{width: 270, marginBottom: 4,position: 'relative', backgroundColor: '#151515'}} key={id} component={Link} to={`/movie/${id}`} onClick={clickOnMovieCard}>
+    <Card sx={{ maxWidth: '270px', position: 'relative', backgroundColor: '#151515'}} key={id} component={Link} to={`/movie/${id}`} onClick={clickOnMovieCard}>
       <Chip 
         label={vote.toFixed(1)} 
         color={movieRate}
