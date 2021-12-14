@@ -4,13 +4,13 @@ import ErrorBoundary from '../../error-boundary/error-boundary';
 import Spinner from '../../spinner/spinner';
 import { useSearchPage } from './use-search-page';
 import { useTranslation } from 'react-i18next';
-import useQuery from '../../../services/use-query';
+import { useSearchParams } from 'react-router-dom';
 import './search-page.scss';
 
 const SearchPage = () => {
-  let queryState = useQuery();
-  let queryText = queryState.get("query");
-  let queryPage = queryState.get("page");
+  let [searchParams] = useSearchParams();
+  let queryText = searchParams.get("query");
+  let queryPage = searchParams.get("page");
 
   const {status, totalPages, movies, genresStatus} = useSearchPage(queryText, queryPage);
   const { t } = useTranslation();

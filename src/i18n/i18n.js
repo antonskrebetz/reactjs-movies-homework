@@ -2,7 +2,7 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 const translationsEn = {
-  inputPlaceholder: 'Movies, person...',
+  inputPlaceholder: 'Movie search',
   toggleBtnsPopMovies: 'Popular',
   toggleBtnsTopMovies: 'Top rated',
   toggleBtnsUpMovies: 'Upcoming',
@@ -28,7 +28,7 @@ const translationsEn = {
   }
 }
 const translationsRu = {
-  inputPlaceholder: 'Фильмы, актёры...',
+  inputPlaceholder: 'Поиск фильмов',
   toggleBtnsPopMovies: 'Популярные',
   toggleBtnsTopMovies: 'Топовые',
   toggleBtnsUpMovies: 'Ожидаемые',
