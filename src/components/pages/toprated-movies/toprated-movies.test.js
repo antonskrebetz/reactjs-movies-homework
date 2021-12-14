@@ -1,13 +1,16 @@
 import { render, screen } from '@testing-library/react';
 import {Provider} from 'react-redux';
+import { BrowserRouter as Router} from "react-router-dom";
 import store from '../../../redux/store';
 import TopRatedMovies from './toprated-movies';
 
 describe('Test TopRatedMovies component', () => {
   beforeEach( () => {
     render(
-      <Provider store={store}>  
-        <TopRatedMovies/>
+      <Provider store={store}>
+        <Router>
+          <TopRatedMovies/>
+        </Router>  
       </Provider>
     );
   })

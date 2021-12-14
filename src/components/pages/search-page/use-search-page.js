@@ -1,20 +1,19 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchSearchMovies } from "../../../redux/searchSlice";
 import { useLang } from "../../../services/use-lang";
 
-export const useSearchPage = (initialPage) => {
+export const useSearchPage = (query, page) => {
   const dispatch = useDispatch();
-  const [page, setPage] = useState(initialPage);
   const {lang} = useLang();
-  const query = useSelector(state => state.appReducer.query);
   const { status } = useSelector(state => state.searchReducer);
   const movies = useSelector(state => state.searchReducer.searchMovies);
   const totalPages = useSelector(state => state.searchReducer.totalPages);
+  const genresStatus = useSelector(state => state.appReducer.genresStatus);
 
   useEffect(() => {
     dispatch(fetchSearchMovies({lang, query, page}))
   }, [dispatch, query, lang, page]);
 
-  return {setPage, status, query, totalPages, movies};
+  return {status, totalPages, movies, genresStatus};
 }

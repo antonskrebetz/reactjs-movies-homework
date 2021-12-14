@@ -34,6 +34,7 @@ export const fetchMovieRecommend = createAsyncThunk(
 const initialState = {
   movieStatus: null,
   movieError: null,
+  movieData: {},
   imagesStatus: null,
   imagesError: null,
   movieImages: [],
@@ -62,7 +63,7 @@ const movieSlice = createSlice({
     },
     [fetchMovie.fulfilled]: (state, action) => {
       state.movieStatus = 'resolved';
-      state.searchMovies = action.payload.results;
+      state.movieData = action.payload;
     },
     [fetchMovie.rejected]: (state, action) => {
       state.movieStatus = 'rejected';

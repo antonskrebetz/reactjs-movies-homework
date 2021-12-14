@@ -1,30 +1,31 @@
-import ToggleButtons from '../../toggle-buttons/toggle-buttons';
 import BasicPagination from '../../pagination/pagination';
 import MovieList from '../../movie-list/movie-list';
 import ErrorBoundary from '../../error-boundary/error-boundary';
-import { SpinnerCircularFixed } from 'spinners-react';
-import { Container } from '@mui/material';
+import Spinner from '../../spinner/spinner';
 import { useSearchPage } from './use-search-page';
 import { useTranslation } from 'react-i18next';
+import { useSearchParams } from 'react-router-dom';
 import './search-page.scss';
 
 const SearchPage = () => {
+  let [searchParams] = useSearchParams();
+  let queryText = searchParams.get("query");
+  let queryPage = searchParams.get("page");
 
-  const {setPage, status, query, totalPages, movies} = useSearchPage(1);
+  const {status, totalPages, movies, genresStatus} = useSearchPage(queryText, queryPage);
   const { t } = useTranslation();
   
   return (
-    <Container maxWidth="xl">
-      <ToggleButtons/>
+    <>
+      <h2 className="search-results">
+        {movies.length ? `${t('searchResl')}: «${queryText}»` : `NO RESULTS FOUND: «${queryText}»`}
+      </h2>
+      {status === 'loading' && <Spinner/>}
       <ErrorBoundary>
-        <h2 className="search-results">
-          {movies.length ? `${t('searchResl')}: «${query}»` : `NO RESULTS FOUND: «${query}»`}
-        </h2>
-        {status === 'loading' && <SpinnerCircularFixed style={{display: 'block', margin: '40px auto'}}/>}
-        <MovieList data={movies}/>
+        {genresStatus === 'loading' ? <Spinner/> : <MovieList data={movies}/>}
       </ErrorBoundary>
-      <BasicPagination setPage={setPage} countPages={totalPages}/>
-    </Container>
+      <BasicPagination actualPage={queryPage} query={queryText} countPages={totalPages}/>
+    </>
   )
 }
 

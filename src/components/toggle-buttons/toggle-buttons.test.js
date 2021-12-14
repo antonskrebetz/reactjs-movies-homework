@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { BrowserRouter as Router} from "react-router-dom";
 import {Provider} from 'react-redux';
 import store from '../../redux/store';
 import ToggleButtons from './toggle-buttons';
@@ -7,13 +8,15 @@ describe('Test ToggleButtons component', () => {
   beforeEach(() => {
     render(
       <Provider store={store}>
-        <ToggleButtons/>
+        <Router>
+          <ToggleButtons/>
+        </Router>
       </Provider>
     );
   })
 
-  test('has a popular button', () => {
-    const btn = screen.getByText(/popular/i);
+  test('has a toggle buttons', () => {
+    const btn = screen.getByRole('group');
     expect(btn).toBeDefined();
   });
 });

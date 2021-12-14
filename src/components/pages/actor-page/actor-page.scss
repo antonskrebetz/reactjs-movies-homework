@@ -34,6 +34,10 @@
     }
   }
 
+  &-info {
+    flex-grow: 1;
+  }
+
   &-blocktitle {
     margin-top: 15px;
     margin-bottom: 3px;
@@ -42,20 +46,19 @@
   }
 
   &-photos {
-    margin-top: 10px;
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 200px);
+    justify-content: space-between;
+    align-content: center;
+    grid-gap: 20px;
 
-    @media (max-width: 610px) {
+    @media (max-width: 469px) {
       justify-content: center; 
     }
 
     & img {
-      margin-right: 20px;
-      margin-bottom: 20px;
       height: auto;
-      max-width: 200px;
+      width: 200px;
       border-radius: 6px;
     }
   }

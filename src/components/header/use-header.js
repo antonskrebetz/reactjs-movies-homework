@@ -3,11 +3,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { changeLanguage, changeSearchText } from '../../redux/appSlice';
 import { fetchMovieGenres } from '../../redux/appSlice';
 import i18n from "../../i18n/i18n";
+import { useNavigate } from "react-router-dom";
+
 
 export const useHeader = () => {
   const [searchText, setSearchText] = useState('');
   const dispatch = useDispatch();
   const lang = useSelector(state => state.appReducer.lang);
+  let navigate = useNavigate();
 
   const handleChangeLang = (e) => {
     dispatch(changeLanguage({value: e.target.value}));
@@ -21,6 +24,7 @@ export const useHeader = () => {
   const submitSearchForm = (e) => {
     if (e.key === 'Enter') {
       dispatch(changeSearchText({text: searchText}));
+      navigate(`/search?query=${searchText}`);
       setSearchText('');
     }
   }

@@ -1,0 +1,14 @@
+.page404 {
+  text-align: center;
+
+  & h1 {
+    margin-bottom: 30px;
+  }
+
+  & img {
+    margin: 0 auto 30px;
+    display: block;
+    height: auto;
+    max-width: 100%;
+  }
+}

@@ -2,3 +2,12 @@
   padding-left: 0;
   padding-right: 0;
 }
+
+.header-logo {
+  font-size: 24px;
+  text-transform: uppercase;
+
+  @media(max-width: 600px) {
+    font-size: 16px;
+  }
+}

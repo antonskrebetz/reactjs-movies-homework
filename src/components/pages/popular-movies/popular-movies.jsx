@@ -1,23 +1,23 @@
-import ToggleButtons from '../../toggle-buttons/toggle-buttons';
 import BasicPagination from '../../pagination/pagination';
 import MovieList from '../../movie-list/movie-list';
+import ToggleButtons from '../../toggle-buttons/toggle-buttons';
 import ErrorBoundary from '../../error-boundary/error-boundary';
-import { SpinnerCircularFixed } from 'spinners-react';
-import { Container } from '@mui/material';
+import Spinner from '../../spinner/spinner';
 import { usePopularMovies } from './use-popular-movies';
+import { useSearchParams } from 'react-router-dom';
 
 const PopularMovies = () => {
-
-  const {setPage, status, totalPages, movies} = usePopularMovies(1); 
+  let [searchParams] = useSearchParams();
+  const { status, totalPages, movies, genresStatus } = usePopularMovies(searchParams.get("page")); 
   return (
-    <Container maxWidth="xl">
-      <ToggleButtons/>
-      {status === 'loading' && <SpinnerCircularFixed style={{margin: '40px auto', display: 'block'}}/>}
+    <>
+      <ToggleButtons />
+      {status === 'loading' && <Spinner/>}
       <ErrorBoundary>
-        <MovieList data={movies}/>
+        {genresStatus === 'loading' ? <Spinner/> : <MovieList data={movies}/>}
       </ErrorBoundary>
-      <BasicPagination setPage={setPage} countPages={totalPages}/>
-    </Container>
+      <BasicPagination actualPage={searchParams.get("page")} countPages={totalPages}/>
+    </>
   )
 }
 

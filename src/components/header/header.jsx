@@ -1,71 +1,26 @@
-import { styled, alpha } from '@mui/material/styles';
+import { Link } from 'react-router-dom';
+import {Search, SearchIconWrapper, StyledInputBase, styles} from './styles';
 import SearchIcon from '@mui/icons-material/Search';
-import { Container, InputBase, Typography, Toolbar, Box, AppBar, Select, MenuItem, FormControl, ThemeProvider } from '@mui/material';
+import { Container, Toolbar, Box, AppBar, Select, MenuItem, FormControl, ThemeProvider } from '@mui/material';
 import DarkTheme from '../mui-theme/dark-theme';
 import { useHeader } from './use-header';
 import { useTranslation } from 'react-i18next';
 import './header.scss';
 
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.25),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-  },
-  color: '#fff',
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
-    width: 'auto',
-  },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  color: '#151515',
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '50ch',
-    },
-  },
-}));
-
 const Header = () => {
-
   const {searchText, lang, handleChangeLang, hadleChangeInput, submitSearchForm} = useHeader();
   const { t } = useTranslation();
 
   return (
     <ThemeProvider theme={DarkTheme}>
-      <AppBar position="static" sx={{background: '#202020'}}>
+      <AppBar position="static" sx={styles.bar}>
         <Container maxWidth="xl">
           <Toolbar>
-            <Typography
-              variant="h5"
-              noWrap
-              component="div"
-              sx={{ flexGrow: 1, textTransform: 'uppercase' }}
-            >
-              movie app
-            </Typography>
-            <Search sx={{ display: { xs: 'flex'} }}>
+            <Link to="/" className="header-logo">
+                movie app
+            </Link>
+            <Box sx={{flexGrow: 1}} />
+            <Search sx={styles.search}>
               <SearchIconWrapper>
                 <SearchIcon/>
               </SearchIconWrapper>
@@ -77,7 +32,7 @@ const Header = () => {
                 onKeyDown={submitSearchForm}
               />
             </Search>
-            <Box sx={{ display: { xs: 'flex', md: 'flex' } }}>
+            <Box sx={styles.box}>
               <FormControl fullWidth>
                 <Select
                   id="demo-simple-select"
